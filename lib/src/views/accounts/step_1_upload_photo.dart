@@ -1,0 +1,168 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:rrfx/src/components/alerts/default.dart';
+import 'package:rrfx/src/components/appbars/default.dart';
+import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
+import 'package:rrfx/src/components/colors/default.dart';
+import 'package:rrfx/src/components/containers/utilities.dart';
+import 'package:rrfx/src/components/languages/language_variable.dart';
+import 'package:rrfx/src/components/painters/loading_water.dart';
+import 'package:rrfx/src/components/textfields/number_textfield.dart';
+import 'package:rrfx/src/components/textfields/void_textfield.dart';
+import 'package:rrfx/src/controllers/regol.dart';
+import 'package:rrfx/src/helpers/handlers/image_picker.dart';
+import 'package:rrfx/src/helpers/variables/countries.dart';
+import 'package:rrfx/src/helpers/variables/id_type.dart' show idTypeList;
+import 'package:rrfx/src/views/accounts/step_2_stored_data.dart';
+import 'package:rrfx/src/views/mainpage.dart';
+import 'components/step_position.dart';
+
+class Step1UploadPhoto extends StatefulWidget {
+  const Step1UploadPhoto({super.key});
+
+  @override
+  State<Step1UploadPhoto> createState() => _Step1UploadPhotoState();
+}
+
+class _Step1UploadPhotoState extends State<Step1UploadPhoto> {
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nationallyController = TextEditingController();
+  TextEditingController idTypeController = TextEditingController();
+  TextEditingController idTypeNumber = TextEditingController();
+  RegolController regolController = Get.put(RegolController());
+
+  RxString idPhoto = "".obs;
+  RxString idPhotoSelfie = "".obs;
+  RxBool isLoading = false.obs;
+  RxBool imageLoaded = false.obs;
+
+  @override
+  void initState() {
+    super.initState();
+    idTypeController.text = regolController.accountModel.value?.idType ?? "";
+    idTypeNumber.text = regolController.accountModel.value?.idNumber ?? "";
+    nationallyController.text = regolController.accountModel.value?.country ?? "";
+    if(regolController.accountModel.value?.appFotoTerbaru != null && regolController.accountModel.value?.appFotoIdentitas != null){
+      idPhoto(regolController.accountModel.value?.appFotoIdentitas);
+      idPhotoSelfie(regolController.accountModel.value?.appFotoTerbaru);
+      imageLoaded(true);
+    }
+  }
+
+  @override
+  void dispose() {
+    nationallyController.dispose();
+    idTypeController.dispose();
+    idTypeNumber.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            appBar: CustomAppBar.defaultAppBar(
+              autoImplyLeading: true,
+              title: LanguageGlobalVar.PERSONAL_INFORMATION.tr,
+              actions: [
+                CupertinoButton(
+                  onPressed: (){
+                    Get.offAll(() => const Mainpage());
+                  },
+                  child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
+                )
+              ]
+            ),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(24.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    UtilitiesWidget.titleContent(
+                      title: LanguageGlobalVar.TITLE_REGOL_PAGE_1.tr,
+                      subtitle: LanguageGlobalVar.SUBTITLE_REGOL_PAGE_1.tr,
+                      children: [
+                        const SizedBox(height: 10),
+                        VoidTextField(controller: nationallyController, fieldName: LanguageGlobalVar.NATIONALY.tr, hintText: LanguageGlobalVar.CHOOSE_NATIONALY.tr, labelText: LanguageGlobalVar.NATIONALY.tr, onPressed: (){
+                          CustomMaterialBottomSheets.defaultBottomSheet(context, size: size, title: LanguageGlobalVar.CHOOSE_NATIONALY.tr, children: List.generate(countryList.length, (i){
+                            return ListTile(
+                              onTap: (){
+                                Navigator.pop(context);
+                                nationallyController.text = countryList[i].name;
+                              },
+                              title: Text(countryList[i].name, style: GoogleFonts.inter()),
+                            );
+                          }));
+                        }),
+                        VoidTextField(onPressed: (){
+                          CustomMaterialBottomSheets.defaultBottomSheet(context, size: size, title: LanguageGlobalVar.CHOOSE_YOUR_ID_TYPE.tr, isScrolledController: false, children: List.generate(idTypeList.length, (i){
+                            return ListTile(
+                              onTap: (){
+                                Navigator.pop(context);
+                                idTypeController.text = idTypeList[i].name;
+                              },
+                              title: Text(idTypeList[i].name, style: GoogleFonts.inter()),
+                            );
+                          }));
+                        },
+                          controller: idTypeController, fieldName: LanguageGlobalVar.ID_TYPE.tr, hintText: LanguageGlobalVar.ID_TYPE.tr, labelText: LanguageGlobalVar.ID_TYPE.tr
+                        ),
+                        NumberTextField(controller: idTypeNumber, fieldName: LanguageGlobalVar.ID_TYPE_NUMBER.tr, hintText: LanguageGlobalVar.ID_TYPE_NUMBER.tr, labelText: LanguageGlobalVar.ID_TYPE_NUMBER.tr, maxLength: 14),
+                        Obx(
+                          () => isLoading.value ? const SizedBox() : UtilitiesWidget.uploadPhoto(isImageOnline: imageLoaded.value, title: "Foto KTP", onPressed: () async {
+                            idPhoto.value = await CustomImagePicker.pickImageFromCameraAndReturnUrl();
+                          }, urlPhoto: idPhoto.value),
+                        ),
+                        Obx(
+                          () => !isLoading.value ? Obx(
+                            () => UtilitiesWidget.uploadPhoto(isImageOnline: imageLoaded.value, title: "Foto Selfie", urlPhoto: idPhotoSelfie.value, onPressed: () async {
+                              idPhotoSelfie.value = await CustomImagePicker.pickImageFromCameraAndReturnUrl();
+                            }),
+                          ) : const SizedBox()),
+                      ]
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: Obx(
+              () => StepUtilities.stepOnlineRegister(
+                size: size,
+                title: LanguageGlobalVar.VERIFICATION_IDENTITY.tr,
+                onPressed: regolController.isLoading.value ? null : (){
+                  regolController.postStepOne(
+                    country: nationallyController.text,
+                    idType: idTypeController.text,
+                    idTypeNumber: idTypeNumber.text,
+                    appFotoIdentitas: imageLoaded.value ? "" : idPhoto.value,
+                    appFotoTerbaru: imageLoaded.value ? "" : idPhotoSelfie.value
+                  ).then((result){
+                    if(!result){
+                      CustomAlert.alertError(message: regolController.responseMessage.value);
+                      return false;
+                    }
+
+                    Get.to(() => const Step2StoredData());
+                  });
+                },
+                progressEnd: 4,
+                progressStart: 1
+              ),
+            ),
+          ),
+        ),
+        Obx(() => regolController.isLoading.value ? LoadingWater() : const SizedBox())
+      ],
+    );
+  }
+}

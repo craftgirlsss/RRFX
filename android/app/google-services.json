@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "792822151078",
+    "project_id": "rrfx-cf118",
+    "storage_bucket": "rrfx-cf118.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792822151078:android:cfc77381fcbe9b342dc167",
+        "android_client_info": {
+          "package_name": "com.rrfx.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792822151078-dmpedoq22map9u7dt1saufeun94fomv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rrfx.app",
+            "certificate_hash": "df8b656f269bf2b75bb5a40d830ba31198f8ac89"
+          }
+        },
+        {
+          "client_id": "792822151078-tk0juv5g0349en6i9i4s5qdcbb22a48l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rrfx.app",
+            "certificate_hash": "cb2145406273568f0108f878d94f938bde4ed49f"
+          }
+        },
+        {
+          "client_id": "792822151078-oe86f7chaacemfbmjutved2ns7c4vsmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLdJvDNVFBZc0SgN2GOy1f2UPs1meOais"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792822151078-oe86f7chaacemfbmjutved2ns7c4vsmb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792822151078-j0hj3tpt44v6h45052mcs9mhq8slet10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rrfx.rrfx"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
