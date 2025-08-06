@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:rrfx/src/models/auth/profile.dart';
 import 'package:rrfx/src/models/settings/history_withdraw_deposit_model.dart';
+import 'package:rrfx/src/models/settings/transaction_detail_model.dart';
 import 'package:rrfx/src/service/auth_service.dart';
 
 class UserController extends GetxController {
@@ -10,6 +11,7 @@ class UserController extends GetxController {
   AuthService authService = AuthService();
   Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
   Rxn<HistoryWithdrawDepositModel> historyDepoWd = Rxn<HistoryWithdrawDepositModel>();
+  Rxn<TransactionDetailModel> transactionDetail = Rxn<TransactionDetailModel>();
 
   Future<bool> getProfile() async {
     isLoading(true);
@@ -89,18 +91,36 @@ class UserController extends GetxController {
     }
   }
 
-  Future<bool> historyWithdrawAndDeposit({String? urlImage}) async {
+  Future<bool> historyWithdrawAndDeposit() async {
     try {
       isLoading(true);
-      Map<String, String> file = {};
-      if(urlImage != null) {
-        file['image'] = urlImage;
-      }
-      final result = await authService.get("transaction/history");
+      Map<String, dynamic> result = await authService.get("transaction/history");
       isLoading(false);
-      print(result);
+
+      // ✅ Parsing langsung dari List
+      var model = HistoryWithdrawDepositModel.fromJson(result['response']);
+      historyDepoWd(model); // Pastikan ini menerima tipe yang sesuai
+
       responseMessage(result['message']);
-      if(result['status'] != true) {
+      if (result['status'] != true) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      isLoading(false);
+      responseMessage(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> historyTransactionDetail({String? id}) async {
+    try {
+      isLoading(true);
+      Map<String, dynamic> result = await authService.get("transaction/historyDetail?id=$id");
+      isLoading(false);
+      transactionDetail(TransactionDetailModel.fromJson(result['response']));
+      responseMessage(result['message']);
+      if (result['status'] != true) {
         return false;
       }
       return true;

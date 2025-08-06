@@ -5,7 +5,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/components/languages/language_variable.dart';
 import 'package:rrfx/src/views/accounts/index.dart';
-import 'package:rrfx/src/views/beranda/index.dart';
 import 'package:rrfx/src/views/beranda/index_v2.dart';
 import 'package:rrfx/src/views/settings/index.dart';
 import 'package:rrfx/src/views/trade/index_v2.dart';

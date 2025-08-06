@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
+import 'package:rrfx/src/controllers/user_controller.dart';
 
 import 'detail_deposit_withdrawal.dart';
 
@@ -16,6 +17,7 @@ class DepositWithdrawalHistory extends StatefulWidget {
 
 class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
 
+  UserController userController = Get.find();
   RxList<Map<String, dynamic>> listHistoryDeposit = <Map<String, dynamic>>[
     {
     "isDeposit": true,
@@ -28,8 +30,21 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
   ].obs;
 
   bool isDeposit = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, (){
+      userController.historyWithdrawAndDeposit().then((result){
+        print(userController.historyDepoWd.value?.response[0].id);
+      });
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar.defaultAppBar(
         autoImplyLeading: true,
@@ -38,20 +53,32 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Obx(
-            () => Column(
-            children: List.generate(listHistoryDeposit.length, (i){
+          () => userController.isLoading.value ? SizedBox(
+            width: size.width,
+            height: size.height / 1.2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircularProgressIndicator(color: CustomColor.defaultColor),
+                const SizedBox(height: 10.0),
+                const Text("Loading...")
+              ],
+            ),
+          ) : Column(
+            children: List.generate(userController.historyDepoWd.value?.response.length ?? 0, (i){
+              final result = userController.historyDepoWd.value?.response[i];
               return ListTile(
                 leading: Container(
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: CustomColor.defaultColor,
+                    color: result?.type == "Deposit" || result?.type == "Deposit New Account" ? CustomColor.secondaryColor : CustomColor.defaultColor,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(listHistoryDeposit[i]['isDeposit'] ? AntDesign.arrow_down_outline : AntDesign.arrow_up_outline, size: 30, color: Colors.white),
+                  child: Icon(result?.type == "Deposit" || result?.type == "Deposit New Account" ? AntDesign.arrow_down_outline : AntDesign.arrow_up_outline, size: 30, color: Colors.white),
                 ),
-                title: Text(listHistoryDeposit[i]['isDeposit'] ? "Deposit" : "Withdrawal", style: GoogleFonts.inter(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold)),
-                subtitle: Text("\$${listHistoryDeposit[i]['balance']}"),
+                title: Text(result?.type ?? "-", style: GoogleFonts.inter(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold)),
+                subtitle: Text("${result?.amount}"),
                 trailing: SizedBox(
                   height: 30,
                   child: ElevatedButton(
@@ -61,7 +88,7 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
                       )
                     ),
                     onPressed: (){
-                      Get.to(() => DetailDepositWithdrawal(isDeposit: listHistoryDeposit[i]['isDeposit']));
+                      Get.to(() => DetailDepositWithdrawal(index: i, id: result?.id));
                     }, child: Text("Lihat", style: GoogleFonts.inter(color: Colors.white))
                   ),
                 ),

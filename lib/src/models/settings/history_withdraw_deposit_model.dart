@@ -1,39 +1,43 @@
 class HistoryWithdrawDepositModel {
-  HistoryWithdrawDepositModel({
-    this.response,
-  });
-  List<Response>? response;
-  
-  HistoryWithdrawDepositModel.fromJson(Map<String, dynamic> json){
-    response = List.from(json['response']).map((e)=>Response.fromJson(e)).toList();
+  List<HistoryItem> response;
+
+  HistoryWithdrawDepositModel({required this.response});
+
+  factory HistoryWithdrawDepositModel.fromJson(List<dynamic> json) {
+    return HistoryWithdrawDepositModel(
+      response: json.map((e) => HistoryItem.fromJson(e)).toList(),
+    );
   }
 }
 
-class Response {
-  Response({
-    this.id,
-    this.type,
-    this.login,
-    this.amount,
-    this.amountReceived,
-    this.status,
-    this.datetime,
+class HistoryItem {
+  final String id;
+  final String type;
+  final String login;
+  final String amount;
+  final String amountReceived;
+  final String status;
+  final String datetime;
+
+  HistoryItem({
+    required this.id,
+    required this.type,
+    required this.login,
+    required this.amount,
+    required this.amountReceived,
+    required this.status,
+    required this.datetime,
   });
-  String? id;
-  String? type;
-  String? login;
-  String? amount;
-  String? amountReceived;
-  String? status;
-  String? datetime;
-  
-  Response.fromJson(Map<String, dynamic> json){
-    id = json['id'];
-    type = json['type'];
-    login = json['login'];
-    amount = json['amount'];
-    amountReceived = json['amount_received'];
-    status = json['status'];
-    datetime = json['datetime'];
+
+  factory HistoryItem.fromJson(Map<String, dynamic> json) {
+    return HistoryItem(
+      id: json['id'] ?? '',
+      type: json['type'] ?? '',
+      login: json['login'] ?? '',
+      amount: json['amount'] ?? '',
+      amountReceived: json['amount_received'] ?? '',
+      status: json['status'] ?? '',
+      datetime: json['datetime'] ?? '',
+    );
   }
 }

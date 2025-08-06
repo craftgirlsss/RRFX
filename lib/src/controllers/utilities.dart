@@ -441,6 +441,25 @@ class UtilitiesController extends GetxController {
   }
 
   // Desa API
+  Future convertingMoney({String? amount, String? accountID, String? type = "withdrawal"}) async {
+    try {
+      Map<String, dynamic> result = await authService.post("transaction/rate-conversation", {
+        "amount" : amount,
+        "account" : accountID,
+        "type" : type
+      });
+      responseMessage(result['message']);
+      if (result['status'] != true) {
+        return false;
+      }
+      return result;
+    } catch (e) {
+      responseMessage(e.toString());
+      return false;
+    }
+  }
+
+  // Desa API
   Future<bool> getNewsDetail({String? newsID}) async {
     try {
       Map<String, dynamic> result = await authService.post("public/news-detail", {

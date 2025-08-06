@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:rrfx/src/components/alerts/default.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
@@ -12,6 +13,7 @@ import 'package:rrfx/src/components/textfields/void_textfield.dart';
 import 'package:rrfx/src/controllers/setting.dart';
 import 'package:get/get.dart';
 import 'package:rrfx/src/controllers/trading.dart';
+import 'package:rrfx/src/helpers/formatters/number_formatter.dart';
 import 'package:rrfx/src/helpers/handlers/image_picker.dart';
 import 'package:rrfx/src/helpers/variables/countrycurrency.dart';
 
@@ -205,14 +207,18 @@ class _DepositState extends State<Deposit> {
                       NameTextField(controller: myBankType, fieldName: "Tipe", hintText: "Tipe", labelText: "Tipe", readOnly: true, useValidator: false),
                       Obx(
                         () => VoidTextField(controller: myAccountTrading, fieldName: "Akun Trading", hintText: "Akun Trading", labelText: "Akun Trading", onPressed: settingController.isLoading.value ? null : () async {
-                          CustomMaterialBottomSheets.defaultBottomSheet(context, size: size, title: "Pilih Akun Trading", children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
+                          CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
+                            final account = tradingController.tradingAccountModels.value?.response.real?[i];
                             return ListTile(
+                              subtitle: Text("${account?.currency} - ${account?.login ?? "-"}", style: GoogleFonts.inter(fontWeight: FontWeight.w400, color: Colors.black45)),
+                              title: Text("${account?.namaTipeAkun ?? "-"} (\$${account?.balance})", style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
                               onTap: (){
                                 Navigator.pop(context);
-                                myAccountTrading.text = "${tradingController.tradingAccountModels.value?.response.real?[i].login} - \$${tradingController.tradingAccountModels.value?.response.real?[i].balance}";
-                                selectedTradingID(tradingController.tradingAccountModels.value?.response.real?[i].id);
+                                myAccountTrading.text = "${account?.login} - \$${account?.balance}";
+                                selectedTradingID(account?.id);
                               },
-                              title: Text("${tradingController.tradingAccountModels.value?.response.real?[i].login} - \$${tradingController.tradingAccountModels.value?.response.real?[i].balance}", style: GoogleFonts.inter()),
+                              leading: Icon(Icons.group, color: CustomColor.defaultColor),
+                              trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
                             );
                           }));
                         }),

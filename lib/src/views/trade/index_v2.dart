@@ -77,7 +77,7 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
                   const SizedBox(width: 5.0),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => DerivChartPage(login: int.parse(tradingController.tradingAccountModels.value?.response.real?[selectedIndexAccountTrading.value].login ?? '0') ?? 0, marketName: utilitiesController.marketModel.value?.message[0].currency, balance: tradingController.tradingAccountModels.value?.response.real?[selectedIndexAccountTrading.value].balance));
+                      Get.to(() => DerivChartPage(login: int.parse(tradingController.tradingAccountModels.value?.response.real?[selectedIndexAccountTrading.value].login ?? '0'), marketName: utilitiesController.marketModel.value?.message[0].currency, balance: tradingController.tradingAccountModels.value?.response.real?[selectedIndexAccountTrading.value].balance));
                     },
                     child: Text("My Digital Currency", style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16))),
                 ],
@@ -224,9 +224,6 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
                                 children: [
                                 PriceDisplayWidget(fullPriceString: formatPrices(data.bid.toString(), currency: "USD"), color: color),
                                 PriceDisplayWidget(fullPriceString: formatPrices(data.ask.toString(), currency: "USD"), color: color),
-                                // Text("Bid: ${data.bid.toStringAsFixed(4)}", style: GoogleFonts.inter(fontSize: 12)),
-                                // const SizedBox(width: 10),
-                                // Text("Ask: ${data.ask.toStringAsFixed(4)}", style: GoogleFonts.inter(fontSize: 12)),
                                 ],
                               ),
                               Row(

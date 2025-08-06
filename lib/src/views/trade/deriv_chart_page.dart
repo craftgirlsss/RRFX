@@ -10,7 +10,6 @@ import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
 import 'package:rrfx/src/components/buttons/outlined_button.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/controllers/trading.dart';
-import 'package:rrfx/src/controllers/websocket_controller.dart';
 import 'package:rrfx/src/views/trade/trading_order_history.dart';
 
 import 'components/chart_section.dart';

@@ -17,6 +17,8 @@ import 'package:rrfx/src/helpers/formatters/regex_formatter.dart';
 import 'package:rrfx/src/views/beranda/all_trading_signals.dart';
 import 'package:rrfx/src/views/beranda/lainnya.dart';
 import 'package:rrfx/src/views/beranda/news.dart';
+import 'package:rrfx/src/views/beranda/news_detail.dart';
+import 'package:rrfx/src/views/beranda/notifications_page.dart';
 import 'package:rrfx/src/views/beranda/products_page.dart';
 import 'package:rrfx/src/views/trade/deposit.dart';
 import 'package:rrfx/src/views/trade/deriv_chart_page.dart';
@@ -67,7 +69,10 @@ class _IndexV2State extends State<IndexV2> {
     super.initState();
     tradingController.getTradingAccount().then((result){
       utilitiesController.getTradingSignals().then((result){
-        if(!result){}
+        if(!result){
+          CustomScaffoldMessanger.showAppSnackBar(context, message: utilitiesController.responseMessage.value, type: SnackBarType.warning);
+        }
+        utilitiesController.getNewsList();
       });
       if(tradingController.tradingAccountModels.value?.response.real?.length != 0){
         selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[0].login);
@@ -128,7 +133,9 @@ class _IndexV2State extends State<IndexV2> {
           ),
         ),
         actions: [
-          CupertinoButton(child: Icon(EvaIcons.bell_outline, size: 25, color: CustomColor.secondaryColor), onPressed: (){})
+          CupertinoButton(child: Icon(EvaIcons.bell_outline, size: 25, color: CustomColor.secondaryColor), onPressed: (){
+            Get.to(() => const NotificationsPage());
+          })
         ],
       ),
       body: SingleChildScrollView(
@@ -330,7 +337,7 @@ class _IndexV2State extends State<IndexV2> {
                   const SizedBox(height: 10.0),
                   Obx(
                     () => Column(
-                      children: List.generate(min(4, utilitiesController.tradingSignal.value?.message?.length ?? 0), (i){
+                      children: List.generate(min(3, utilitiesController.tradingSignal.value?.message?.length ?? 0), (i){
                         flag = RegexFormatter.getFlagsFromPairName(utilitiesController.tradingSignal.value?.message?[i].symbol ?? "EURUSD");
                         final analysis = utilitiesController.tradingSignal.value?.message?[i].analysis;
                         return buildCard(
@@ -364,53 +371,56 @@ class _IndexV2State extends State<IndexV2> {
                       Text("News", style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 20)),
                       CupertinoButton(
                         padding: EdgeInsets.zero,
-                        child: Text("Lihat Semua", style: GoogleFonts.inter(fontWeight: FontWeight.w600),), onPressed: (){
-                          Get.to(() => const AllTradingSignals());
-                        }
+                        child: Text("Lihat Semua", style: GoogleFonts.inter(fontWeight: FontWeight.w600),), onPressed: (){}
                       )
                     ]
                   ),
                   const SizedBox(height: 10.0),
-                  Column(
-                    children: List.generate(3, (i){
-                      return CupertinoButton(
-                        padding: EdgeInsets.symmetric(vertical: 5.0),
-                        onPressed: (){},
-                        child: Container(
-                          color: Colors.white,
-                          width: double.infinity,
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset('assets/images/logo-rrfx-2.png', width: 60),
-                                  const SizedBox(width: 10.0),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Bussiness', style: GoogleFonts.inter(color: Colors.black45)),
-                                        Text('Why it\'s gotten more difficult to get a free first-class upgrade', style: GoogleFonts.inter(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600), maxLines: 3),
-                                        const SizedBox(height: 5.0),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Text('Admin', style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0)),
-                                            Icon(OctIcons.dot, size: 13.0, color: Colors.black45),
-                                            Flexible(child: Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.now()), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const Divider(color: Colors.black12)
-                            ],
+                  Obx(
+                    () => Column(
+                      children: List.generate(min(3, utilitiesController.newsModel.value?.response.length ?? 0), (i){
+                        final result = utilitiesController.newsModel.value?.response;
+                        return CupertinoButton(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          onPressed: (){
+                            Get.to(() => NewsDetail(idNews: result?[i].id));
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            width: double.infinity,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    result?[i].picture != null ? Image.network(result![i].picture!, width: 60, fit: BoxFit.cover) : Image.asset('assets/images/logo-rrfx-2.png', width: 60),
+                                    const SizedBox(width: 10.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Bussiness', style: GoogleFonts.inter(color: Colors.black45)),
+                                          Text(result?[i].title ?? '-', style: GoogleFonts.inter(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600), maxLines: 3),
+                                          const SizedBox(height: 5.0),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text('Admin', style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0)),
+                                              Icon(OctIcons.dot, size: 13.0, color: Colors.black45),
+                                              Flexible(child: result?[i].tanggal != null ? Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.parse(result![i].tanggal!)), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis) : Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.now()), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const Divider(color: Colors.black12)
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                   )
                 ],
               ),

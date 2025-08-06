@@ -26,11 +26,11 @@ class _AboutAppState extends State<AboutApp> {
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           children: [
-            Image.asset('assets/images/ic_launcher.png', width: size.width / 2),
+            Image.asset('assets/images/logo-rrfx.png', width: size.width / 2),
             UtilitiesWidget.titleContent(
               title: "Tentang Aplikasi",
               textAlign: TextAlign.justify,
-              subtitle: "Selamat datang di aplikasi resmi PT Tridentpro Futures. Solusi trading modern yang dirancang khusus untuk memberikan pengalaman trading forex yang aman, cepat, dan andal di genggaman tangan Anda. Aplikasi ini memungkinkan pengguna untuk",
+              subtitle: "Selamat datang di aplikasi resmi PT. RRFX Investasi Berjangka. Solusi trading modern yang dirancang khusus untuk memberikan pengalaman trading forex yang aman, cepat, dan andal di genggaman tangan Anda. Aplikasi ini memungkinkan pengguna untuk",
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +63,7 @@ class _AboutAppState extends State<AboutApp> {
                 const SizedBox(height: 20),
                 Text("""
 Dengan dukungan sistem keamanan berlapis dan antarmuka pengguna yang intuitif, aplikasi ini menjadi mitra terbaik Anda dalam memulai atau mengembangkan karier trading di dunia forex.
-PT Tridentpro Futures berkomitmen untuk menyediakan layanan keuangan yang transparan, profesional, dan sesuai regulasi. Unduh aplikasinya sekarang dan mulai perjalanan Anda dalam dunia trading bersama kami.
+PT. RRFX Investasi Berjangka berkomitmen untuk menyediakan layanan keuangan yang transparan, profesional, dan sesuai regulasi. Unduh aplikasinya sekarang dan mulai perjalanan Anda dalam dunia trading bersama kami.
                 """, textAlign: TextAlign.justify, style: GoogleFonts.inter(fontSize: 16)),
                 Text("Versi Aplikasi: 1.0.0", style: GoogleFonts.inter(fontSize: 16)),
               ]

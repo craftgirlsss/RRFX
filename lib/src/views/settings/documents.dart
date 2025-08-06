@@ -51,15 +51,15 @@ class _DocumentsState extends State<Documents> {
     final data = [
       {
         "name": "Profile Perusahaan",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/profile-perusahaan?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/profile-perusahaan?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Pernyataan Simulasi / PERNYATAAN TELAH MELAKUKAN SIMULASI PERDAGANGAN BERJANGKA KOMODITI",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pernyataan-simulasi?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pernyataan-simulasi?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Pernyataan Pengalaman / SURAT PERNYATAAN TELAH BERPENGALAMAN MELAKSANAKAN TRANSAKS",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pernyataan-pengalaman?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pernyataan-pengalaman?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Pernyataan Pengungkapan / Disclosure Statement",
@@ -67,31 +67,31 @@ class _DocumentsState extends State<Documents> {
       },
       {
         "name": "Aplikasi Pembukaan Rekening / APLIKASI PEMBUKAAN REKENING TRANSAKSI SECARA ELEKTRONIK ONLINE",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/aplikasi-pembukaan-rekening?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/aplikasi-pembukaan-rekening?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Dokumen Pemberitahuan Adanya resiko / DOKUMEN PEMBERITAHUAN ADANYA RISIKO YANG HARUS DISAMPAIKAN OLEH PIALANG BERJANGKA UNTUK TRANSAKSI KONTRAK DERIVATIF DALAM SISTEM PERDAGANGAN ALTERNATIF",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pemberitahuan-adanya-risiko?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pemberitahuan-adanya-risiko?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Perjanjian Pemberian Amanat / PERJANJIAN PEMBERIAN AMANAT SECARA ELEKTRONIK ONLINE UNTUK TRANSAKSI KONTRAK DERIVATIF DALAM SISTEM PERDAGANGAN ALTERNATIF",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/perjanjian-pemberian-amanat?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/perjanjian-pemberian-amanat?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Personal Access Password / PERNYATAAN BERTANGGUNG JAWAB ATAS KODE AKSES TRANSAKSI NASABAH",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/personal-access-password?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/personal-access-password?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Pernyataan Dana Nasabah / PERNYATAAN BAHWA DANA YANG DIGUNAKAN SEBAGAI MARGIN MERUPAKAN DANA MILIK NASABAH SENDIR",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pernyataan-dana-nasabah?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/pernyataan-dana-nasabah?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Kelengkapan Formulir",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/kelengkapan-formulir?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/kelengkapan-formulir?acc=${selectedAccountTradingHash}"
       },
       {
         "name": "Surat Pernyataan Diterima",
-        "url": "https://cabinet-tridentprofutures.techcrm.net/export/surat-pernyataan?acc=${selectedAccountTradingHash ?? ''}"
+        "url": "https://cabinet-tridentprofutures.techcrm.net/export/surat-pernyataan?acc=${selectedAccountTradingHash}"
       },
     ];
     return Scaffold(
