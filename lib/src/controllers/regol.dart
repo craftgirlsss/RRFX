@@ -16,8 +16,6 @@ class RegolController extends GetxController {
     try {
       Map<String, dynamic> result = await authService.get("regol/product");
       responseMessage(result['message']);
-      print("INI RESULT GET PRODUCT REGOL $result");
-      // print(result);
       productModels(ProductModels.fromJson(result));
       return true;
     } catch (e) {
@@ -30,7 +28,6 @@ class RegolController extends GetxController {
     try {
       /** Fetch data from api */
       Map<String, dynamic> result = await authService.get("regol/progressAccount");
-      print("INI RESULT GET PROGRESS REGOL $result");
       responseMessage(result['message']);
 
       if(result['status'] != true) {
@@ -61,8 +58,6 @@ class RegolController extends GetxController {
       Map<String, dynamic> result = await authService.post("regol/accountType", {
         'account-type' : accountSuffix
       });
-      print("INI RESULT POST STEP ZERO $result");
-
       isLoading(false);
       responseMessage(result['message']);
       if (result['status'] != true) {
@@ -140,7 +135,6 @@ class RegolController extends GetxController {
       if (result['status'] != true) {
         return false;
       }
-      print(result);
       return true;
     } catch (e) {
       isLoading(false);
@@ -160,9 +154,6 @@ class RegolController extends GetxController {
         'app_nomor_tlp_rumah': phoneHome,
         'app_nomor_fax': faxNumber
       });
-
-      print(result);
-
       isLoading(false);
       responseMessage(result['message']);
       if (result['status'] != true) {
@@ -233,7 +224,6 @@ class RegolController extends GetxController {
       });
 
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -291,7 +281,6 @@ class RegolController extends GetxController {
       });
 
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -343,7 +332,6 @@ class RegolController extends GetxController {
       if(result['status'] == false){
         return false;
       }
-      print(result);
       return true;
 
     } catch (e) {
@@ -367,7 +355,6 @@ class RegolController extends GetxController {
       });
 
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -399,7 +386,6 @@ class RegolController extends GetxController {
       });
 
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -413,7 +399,6 @@ class RegolController extends GetxController {
   }
 
   Future<bool> stepDokumenPendukung({String? dokumenPendukung1, String? dokumenPendukung2, String? jenisDokumen}) async {
-    print("Fungsi dokumen pendukung dijalankan");
     try {
       Map<String, String> file = {};
       isLoading(true);
@@ -429,12 +414,10 @@ class RegolController extends GetxController {
 
       var result = await authService.multipart("regol/apr_dokumen_pendukung", body, file);
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if(result['status'] == false){
         return false;
       }
-      print(result);
       return true;
 
     } catch (e) {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:rrfx/src/components/alerts/default.dart';
+import 'package:rrfx/src/components/alerts/scaffold_messanger_alert.dart';
 import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
 import 'package:rrfx/src/components/buttons/outlined_button.dart';
 import 'package:rrfx/src/components/colors/default.dart';
@@ -127,8 +127,6 @@ class _DerivChartPageState extends State<DerivChartPage> {
     super.initState();
     // marketSymbol = widget.marketName; // simbol dari user
     // ohlcData = webSocketController.generateOHLCFromTicks(marketSymbol!, const Duration(minutes: 1));
-    print(ohlcData);
-    print(marketSymbol);
     tradingController.getTradingAccount().then((result){
       if(tradingController.tradingAccountModels.value?.response.real?.length != 0){
         for(int i = 0; i < tradingController.tradingAccountModels.value!.response.real!.length; i++){
@@ -153,18 +151,20 @@ class _DerivChartPageState extends State<DerivChartPage> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _initializeDrawingTools();
       });
-      _refreshTimer = Timer.periodic(const Duration(seconds: 60), (_) {
+      _refreshTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         _loadChartData();
       });
     });
   }
 
   Future<void> _loadChartData() async {
+    print(granulity);
     try {
       final result = await tradingController.getMarketForDerivChart(
         market: currentSymbol.value,
         timeframe: selectedTf.name.toUpperCase(),
       );
+      print(result);
 
       switch(selectedTf){
         case TimeFrame.h1:
@@ -177,7 +177,9 @@ class _DerivChartPageState extends State<DerivChartPage> {
           granulity(3600);
       }
 
-      if(selectedTf == TimeFrame.h1){}
+      if(selectedTf == TimeFrame.h1){
+
+      }
       
       if (result) {
         candleCount.value = tradingController.ohlcDataDeriv.length;
@@ -236,6 +238,7 @@ class _DerivChartPageState extends State<DerivChartPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(granulity);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -442,35 +445,31 @@ class _DerivChartPageState extends State<DerivChartPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Obx(() => TradingProperty.sellButton(price: double.tryParse(currentPrice.value.toStringAsFixed(2)), onPressed: (){
-              CustomAlert.alertDialogCustomInfo(title: "SELL", message: "Apakah anda yakin ingin melanjutkan?", colorPositiveButton: Colors.red, onTap: () {
-                Get.back();
-                tradingController.executionOrder(symbol: currentSymbol.value, type: "sell", login: widget.login.toString(), lot: TradingProperty.volumeInit.value.toString(), price: currentPrice.value.toString()).then((result) {
-                  if(result['status'] != true){
-                    CustomAlert.alertError(message: result['message']);
-                    return false;
-                  }
-                  CustomAlert.alertDialogCustomSuccess(message: result['message'], onTap: () {
-                    Get.back();
-                  });
-                });
+            Obx(() => TradingProperty.sellButton(price: double.tryParse(currentPrice.value.toStringAsFixed(4)), onPressed: (){
+              // print("ini jumlah lot = ${TradingProperty.volumeInit}");
+              // print("ini current price = ${currentPrice.value.toString()}");
+              // print("ini current market name ${currentSymbol.value}");
+              // print("ini current akun trading ${widget.login}");
+              tradingController.executionOrder(symbol: currentSymbol.value, type: "sell", login: widget.login.toString(), lot: TradingProperty.volumeInit.value.toString(), price: currentPrice.value.toString()).then((result){
+                if(result['status']){
+                  CustomScaffoldMessanger.showAppSnackBar(context, message: result['message'], type: SnackBarType.success);
+                }else{
+                  CustomScaffoldMessanger.showAppSnackBar(context, message: result['message'], type: SnackBarType.error);
+                }
               });
             })),
             TradingProperty.lotButton(),
-            Obx(() => TradingProperty.buyButton(price: double.tryParse(currentPrice.value.toStringAsFixed(2)), onPressed: () {
-              String? finalLot = TradingProperty.volumeInit.value.toStringAsFixed(2);
-              CustomAlert.alertDialogCustomInfo(title: "BUY", message: "Apakah anda yakin ingin melanjutkan?", onTap: () {
-                Get.back();
-                tradingController.executionOrder(symbol: currentSymbol.value, type: "buy", login: widget.login.toString(), lot: finalLot, price: currentPrice.value.toString()).then((result) {
-                  if(result['status'] != true){
-                    CustomAlert.alertError(message: result['message']);
-                    return false;
-                  }
-
-                  CustomAlert.alertDialogCustomSuccess(message: result['message'], onTap: () {
-                    Get.back();
-                  });
-                });
+            Obx(() => TradingProperty.buyButton(price: double.tryParse(currentPrice.value.toStringAsFixed(4)), onPressed: () {
+              // print("ini jumlah lot = ${TradingProperty.volumeInit}");
+              // print("ini current price = ${currentPrice.value.toString()}");
+              // print("ini current market name ${currentSymbol.value}");
+              // print("ini current akun trading ${widget.login}");
+              tradingController.executionOrder(symbol: currentSymbol.value, type: "buy", login: widget.login.toString(), lot: TradingProperty.volumeInit.value.toString(), price: currentPrice.value.toString()).then((result){
+                if(result['status']){
+                  CustomScaffoldMessanger.showAppSnackBar(context, message: result['message'], type: SnackBarType.success);
+                }else{
+                  CustomScaffoldMessanger.showAppSnackBar(context, message: result['message'], type: SnackBarType.error);
+                }
               });
             }))
           ],

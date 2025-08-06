@@ -110,11 +110,9 @@ class _RealSectionState extends State<RealSection> {
                                   activeColor: CustomColor.defaultColor,
                                   value: accountActive[i]['active']!.value,
                                   onChanged: (value) {
-                                    print(value);
                                     accountActive[i]['active']!.value = !accountActive[i]['active']!.value;
                                     if(value){
                                       tradingController.connectTradingAccount(accountId: tradingController.tradingAccountModels.value!.response.real![i].id!).then((result){
-                                        print(result);
                                         Get.back();
                                       });
                                     }

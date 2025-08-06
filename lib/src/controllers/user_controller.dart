@@ -17,7 +17,6 @@ class UserController extends GetxController {
     isLoading(true);
     try {
       Map<String, dynamic> response = await authService.get("/profile/info");
-      print(response);
       isLoading(false);
       responseMessage(response['message']);
       if(response['status'] != true) {
@@ -55,7 +54,6 @@ class UserController extends GetxController {
           'zipcode': zipcode
         }
       );
-      print(response);
       isLoading(false);
       responseMessage(response['message']);
       if(response['status'] != true) {

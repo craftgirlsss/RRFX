@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:rrfx/src/views/beranda/components/notification_tile.dart';
 
 class NotificationsPage extends StatefulWidget {
@@ -12,7 +11,6 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),

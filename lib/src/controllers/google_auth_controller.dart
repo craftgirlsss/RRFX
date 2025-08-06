@@ -47,7 +47,7 @@ class GoogleSignInController extends GetxController {
     try{
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn.instance.authenticate();
-      print(googleUser?.authentication.idToken);
+      // print(googleUser?.authentication.idToken);
 
       // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth = googleUser!.authentication;
@@ -58,7 +58,7 @@ class GoogleSignInController extends GetxController {
       // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e){
-      print(e);
+      // print(e);
       return;
     }
   }
@@ -68,6 +68,6 @@ class GoogleSignInController extends GetxController {
     final FirebaseAuth auth = FirebaseAuth.instance;
     await googleSignIn.signOut();
     await auth.signOut();
-    print("User Signed Out");
+    // print("User Signed Out");
   }
 }

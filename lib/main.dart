@@ -24,7 +24,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('Handling background message: ${message.messageId}');
+  // print('Handling background message: ${message.messageId}');
 }
 
 Future<void> main() async {
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
       Get.toNamed('/home'); // Navigate to home page
     }
     // Add more logic here to handle different deep link paths
-    print('Deep link received: $uri');
+    // print('Deep link received: $uri');
   }
 
   @override
@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('Notification clicked!');
+      // print('Notification clicked!');
     });
   }
 

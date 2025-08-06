@@ -147,7 +147,6 @@ class _DocumentsState extends State<Documents> {
                   return cardDocument(
                     title: data[i]['name'],
                     onDownload: (){
-                      print("${data[i]['url']}$selectedAccountTradingHash");
                       Get.to(() => PdfDownloadAndViewerPage(pdfUrl: "${data[i]['url']}$selectedAccountTradingHash"));
                     }
                   );
@@ -255,13 +254,11 @@ class _PdfDownloadAndViewerPageState extends State<PdfDownloadAndViewerPage> {
         _localFilePath = filePath;
         _isDownloading = false;
       });
-      print('PDF downloaded to: $filePath');
     } catch (e) {
       setState(() {
         _isDownloading = false;
         _errorMessage = 'Failed to download PDF: $e';
       });
-      print('Download error: $e');
     }
   }
 

@@ -257,9 +257,6 @@ class UtilitiesController extends GetxController {
       Map<String, dynamic> result = await authService.post("regol/getDistrict", {
         "regency" : selectedKabupatenID.value
       });
-
-      print(result);
-
       if (result['status'] != true) {
         return false;
       }
@@ -335,7 +332,6 @@ class UtilitiesController extends GetxController {
       if (result['status'] != true) {
         return false;
       }
-      print(result);
       responseMessage(result['message']);
       listTicketModel(ListOfTicketsModel.fromJson(result));
       return true;
@@ -370,8 +366,6 @@ class UtilitiesController extends GetxController {
       Map<String, dynamic> result = await authService.post("ticket/close", {
         "code" : code
       });
-      print(result);
-
       if (result['status'] != true) {
         return false;
       }
@@ -391,7 +385,6 @@ class UtilitiesController extends GetxController {
       if (result['status'] != true) {
         return false;
       }
-      print(result);
       responseMessage(result['message']);
       messagesModel(MessagesModel.fromJson(result));
       return true;
@@ -408,10 +401,6 @@ class UtilitiesController extends GetxController {
         'code': code,
         'message': message
       });
-      print(code);
-      print(message);
-      print(result);
-
       if (result['status'] != true) {
         return false;
       }
@@ -489,7 +478,6 @@ class UtilitiesController extends GetxController {
         },
       );
       var result = jsonDecode(response.body);
-      print("INI RESULT TRADING SIGNAL $result");
       isLoading(false);
       if (response.statusCode == 200) {
         tradingSignal(TradingSignalsModel.fromJson(result));
@@ -498,7 +486,6 @@ class UtilitiesController extends GetxController {
       responseMessage.value = result['result'];
       return false;
     } catch (e) {
-      print(e);
       isLoading(false);
       responseMessage.value = e.toString();
       return false;
@@ -506,7 +493,6 @@ class UtilitiesController extends GetxController {
   }
 
   Future<bool> getMarketPrice() async {
-    print("fungsi get market price dijalankan");
     try {
       loadingPrice(true);
       http.Response response = await http.get(
@@ -518,7 +504,6 @@ class UtilitiesController extends GetxController {
       var result = jsonDecode(response.body);
 
       loadingPrice(false);
-      print("ini result price list => $result");
       if (response.statusCode == 200) {
         marketModel(MarketModel.fromJson(result));
         return true;
@@ -527,7 +512,6 @@ class UtilitiesController extends GetxController {
       return false;
     } catch (e) {
       loadingPrice(false);
-      print(e.toString());
       responseMessage.value = e.toString();
       return false;
     }

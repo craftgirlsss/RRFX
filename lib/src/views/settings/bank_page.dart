@@ -117,9 +117,7 @@ class _MyBankPage extends State<MyBankPage> {
                       currencyType: currencyController.text,
                       owner: ownerController.text,
                       bankID: ''
-                    ).then((result){
-                      print(result);
-                    });
+                    ).then((result){});
                   }
                 },
                 child: Text("Simpan", style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),

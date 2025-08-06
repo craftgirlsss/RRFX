@@ -106,7 +106,6 @@ class _EditProfileState extends State<EditProfile> {
                         fullname: nameController.text,
                         zipcode: zipController.text
                       ).then((result){
-                        print(result);
                         if(result){
                           CustomAlert.alertDialogCustomSuccess(onTap: (){
                             userController.getProfile();

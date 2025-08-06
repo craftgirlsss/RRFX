@@ -62,6 +62,5 @@ class GoogleSignInController extends GetxController {
     final FirebaseAuth auth = FirebaseAuth.instance;
     await googleSignIn.signOut();
     await auth.signOut();
-    print("User Signed Out");
   }
 }

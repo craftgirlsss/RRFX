@@ -41,10 +41,8 @@ class _CardInfoAccountState extends State<CardInfoAccount> {
           Obx(
             () => ElevatedButton(
               onPressed: tradingController.isLoading.value ? null : (){
-                print(widget.isDemo);
                 if(widget.isDemo){
                   tradingController.createDemo().then((result){
-                    print(result);
                     if (mounted) {
                       CustomScaffoldMessanger.showAppSnackBar(context, message: tradingController.responseMessage.value, type: result ? SnackBarType.success : SnackBarType.error, action: SnackBarAction(label: "Okay", onPressed: (){}));
                     }

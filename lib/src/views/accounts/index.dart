@@ -41,14 +41,6 @@ class _AccountsState extends State<Accounts> {
             appBar: CustomAppBar.defaultAppBar(
               title: LanguageGlobalVar.TRADING_ACCOUNT.tr,
               autoImplyLeading: false,
-              // actions: <Widget>[
-              //   IconButtons.defaultIconButton(
-              //     onPressed: (){
-              //       print(tradingController.tradingAccountModels.value?.response.real?.length);
-              //     },
-              //     icon: OctIcons.search
-              //   )
-              // ],
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(50),
                 child: Obx(

@@ -14,9 +14,9 @@ import 'package:rrfx/src/controllers/trading.dart';
 import 'package:rrfx/src/controllers/utilities.dart';
 import 'package:rrfx/src/helpers/formatters/number_formatter.dart';
 import 'package:rrfx/src/helpers/formatters/regex_formatter.dart';
+import 'package:rrfx/src/views/accounts/create_real.dart';
 import 'package:rrfx/src/views/beranda/all_trading_signals.dart';
 import 'package:rrfx/src/views/beranda/lainnya.dart';
-import 'package:rrfx/src/views/beranda/news.dart';
 import 'package:rrfx/src/views/beranda/news_detail.dart';
 import 'package:rrfx/src/views/beranda/notifications_page.dart';
 import 'package:rrfx/src/views/beranda/products_page.dart';
@@ -40,6 +40,8 @@ class _IndexV2State extends State<IndexV2> {
   RxString selectedTypeAccount = "RRFX".obs;
   RxInt selectedEquityAccount = 0.obs;
   RxBool showHideBalance = true.obs;
+  RxBool haveDemoAccount = false.obs;
+  RxBool haveRealAccount = false.obs;
   Map<String, String>? flag;
   RxList menus = [
     {
@@ -75,11 +77,20 @@ class _IndexV2State extends State<IndexV2> {
         utilitiesController.getNewsList();
       });
       if(tradingController.tradingAccountModels.value?.response.real?.length != 0){
+        haveDemoAccount(true);
+        haveRealAccount(true);
         selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[0].login);
         selectedIndexAccountTrading(0);
         selectedBalanceAccount(tradingController.tradingAccountModels.value?.response.real?[0].balance);
         selectedTypeAccount(tradingController.tradingAccountModels.value?.response.real?[0].namaTipeAkun);
         selectedEquityAccount(tradingController.tradingAccountModels.value?.response.real?[0].marginFree);
+      }else{
+        haveRealAccount(false);
+        if(tradingController.tradingAccountModels.value?.response.demo?.length != 0){
+          haveDemoAccount(true);
+        }else{
+          haveDemoAccount(false);
+        }
       }
     });
   }
@@ -188,31 +199,39 @@ class _IndexV2State extends State<IndexV2> {
                         ),
                         Row(
                           children: [
-                            CupertinoButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: (){
-                                Get.to(() => Deposit());
-                              },
-                              child: Column(
-                                children: [
-                                  Icon(FontAwesome.circle_arrow_down_solid, size: 30, color: CustomColor.secondaryColor),
-                                  const SizedBox(height: 10.0),
-                                  Text("Deposit", style: GoogleFonts.inter(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black54))
-                                ],
+                            Obx(
+                              () => CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: haveRealAccount.value ? (){
+                                  Get.to(() => Deposit());
+                                } : (){
+                                  CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki akun real", type: SnackBarType.info);
+                                },
+                                child: Column(
+                                  children: [
+                                    Icon(FontAwesome.circle_arrow_down_solid, size: 30, color: CustomColor.secondaryColor),
+                                    const SizedBox(height: 10.0),
+                                    Text("Deposit", style: GoogleFonts.inter(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black54))
+                                  ],
+                                ),
                               ),
                             ),
                             const SizedBox(width: 20.0),
-                            CupertinoButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: (){
-                                Get.to(() => Withdrawal());
-                              },
-                              child: Column(
-                                children: [
-                                  Icon(FontAwesome.circle_arrow_up_solid, size: 30, color: CustomColor.secondaryColor),
-                                  const SizedBox(height: 10.0),
-                                  Text("Withdraw", style: GoogleFonts.inter(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black54))
-                                ],
+                            Obx(
+                              () => CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: haveRealAccount.value ? (){
+                                  Get.to(() => Withdrawal());
+                                } : (){
+                                  CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki akun real", type: SnackBarType.info);
+                                },
+                                child: Column(
+                                  children: [
+                                    Icon(FontAwesome.circle_arrow_up_solid, size: 30, color: CustomColor.secondaryColor),
+                                    const SizedBox(height: 10.0),
+                                    Text("Withdraw", style: GoogleFonts.inter(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.black54))
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -272,8 +291,12 @@ class _IndexV2State extends State<IndexV2> {
                            Get.to(() => const ProductsPage()); 
                           }else if(condition == "Signals"){
                             Get.to(() => const AllTradingSignals());
-                          }else if(condition == "Top Mover"){
-                            Get.to(() => News());
+                          }else if(condition == "Buat Akun Trading"){
+                            if(haveDemoAccount.value){
+                              Get.to(() => const CreateReal());
+                            }else{
+                              CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki akun demo", type: SnackBarType.info);
+                            }
                           }else if(condition == "Lainnya"){
                             Get.to(() => Lainnya());
                           }else{
@@ -613,10 +636,14 @@ class _IndexV2State extends State<IndexV2> {
               Text("Potensi"),
               CupertinoButton(
                 onPressed: (){
-                  if(selectedAccountTrading.value != ""){
-                    Get.to(() => DerivChartPage(login: int.parse(selectedAccountTrading.value), marketName: marketName));
+                  if(haveRealAccount.value){
+                    if(selectedAccountTrading.value != ""){
+                      Get.to(() => DerivChartPage(login: int.parse(selectedAccountTrading.value), marketName: marketName));
+                    }else{
+                      CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki atau memilih akun trading");
+                    }
                   }else{
-                    CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki atau memilih akun trading");
+                    CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki akun real", type: SnackBarType.info);
                   }
                 },
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),

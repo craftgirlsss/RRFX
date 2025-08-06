@@ -41,9 +41,7 @@ class AuthController extends GetxController {
         twoFactoryAuth.refreshToken(personalModel.value!.response.refreshToken);
         twoFactoryAuth.accessToken(personalModel.value!.response.accessToken);
         responseMessage.value = result['message'];
-        homeController.profile().then((resultProfile){
-          print(resultProfile);
-        });
+        homeController.profile().then((resultProfile){});
         return true;
       }
       responseMessage.value = result['message'];

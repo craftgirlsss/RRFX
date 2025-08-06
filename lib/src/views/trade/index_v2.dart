@@ -11,6 +11,7 @@ import 'package:rrfx/src/controllers/utilities.dart';
 import 'package:get/get.dart';
 import 'package:rrfx/src/controllers/websocket_controller.dart';
 import 'package:rrfx/src/helpers/formatters/currency.dart';
+import 'package:rrfx/src/helpers/formatters/number_formatter.dart';
 import 'deriv_chart_page.dart';
 
 class MetaQuotesPage extends StatefulWidget {
@@ -43,7 +44,6 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
   void initState() {
     super.initState();
     tradingController.getTradingAccount().then((result){
-      print("INI RESULT GET TRADING ACCOUNT $result");
       if(tradingController.tradingAccountModels.value?.response.real?.length != 0){
         selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[0].login);
         selectedIndexAccountTrading(0);
@@ -84,19 +84,19 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
               ),
               CupertinoButton(
                 onPressed: (){
-                  CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.accountTrading.length, (i){
-                    return Obx(
-                      () => ListTile(
-                        title: Text(tradingController.accountTrading[i]['login'] != null ? tradingController.accountTrading[i]['login'].toString() : "0"),
-                        onTap: (){
-                          Get.back();
-                          selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[i].login);
-                          selectedIndexAccountTrading(i);
-                          selectedBalanceAccount(tradingController.tradingAccountModels.value?.response.real?[i].balance);
-                        },
-                        leading: Icon(Icons.group, color: CustomColor.defaultColor),
-                        trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
-                      ),
+                  CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
+                    final account = tradingController.tradingAccountModels.value?.response.real?[i];
+                    return ListTile(
+                      subtitle: Text("${account?.currency} - ${account?.login ?? "-"}", style: GoogleFonts.inter(fontWeight: FontWeight.w400, color: Colors.black45)),
+                      title: Text("${account?.namaTipeAkun ?? "-"} (1:${NumberFormatter.cleanNumber(account?.leverage ?? '0')})", style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                      onTap: (){
+                        Get.back();
+                        selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[i].login);
+                        selectedIndexAccountTrading(i);
+                        selectedBalanceAccount(tradingController.tradingAccountModels.value?.response.real?[i].balance);
+                      },
+                      leading: Icon(Icons.group, color: CustomColor.defaultColor),
+                      trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
                     );
                   }));
                 },

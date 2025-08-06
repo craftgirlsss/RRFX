@@ -18,7 +18,6 @@ class SettingController extends GetxController{
       Map<String, dynamic> result = await authService.get("profile/user-bank");
 
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -58,7 +57,6 @@ class SettingController extends GetxController{
       });
 
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -78,7 +76,6 @@ class SettingController extends GetxController{
       isLoading(true);
       Map<String, dynamic> result = await authService.get("transaction/bank-admin?type_news");
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -113,7 +110,6 @@ class SettingController extends GetxController{
       };
       Map<String, dynamic> result = await authService.multipart("transaction/deposit", body, file);
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -140,7 +136,6 @@ class SettingController extends GetxController{
         'bank_user': bankUserID
       });
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -167,7 +162,6 @@ class SettingController extends GetxController{
         'amount': amount
       });
       isLoading(false);
-      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;

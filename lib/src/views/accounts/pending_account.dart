@@ -22,9 +22,7 @@ class _PendingAccountState extends State<PendingAccount> {
     super.initState();
     Future.delayed(Duration.zero, (){
       homeController.getPendingAccount().then((result){
-        if(!result){
-          print(homeController.responseMessage.value);
-        }
+        if(!result){}
       });
     });
   }

@@ -72,7 +72,6 @@ class _SettingsState extends State<Settings> {
                 moreThanOneButton: true,
                 onTap: () async {
                   SharedPreferences prefs = await SharedPreferences.getInstance();
-                  debugPrint(prefs.getString("accessToken"));
                   prefs.remove('accessToken');
                   prefs.remove('refreshToken');
                   prefs.remove('loggedIn');
@@ -113,9 +112,7 @@ class _SettingsState extends State<Settings> {
                 );
               },
               onTapImage: () async {
-                debugPrint("pressed");
                 selectedImage(await CustomImagePicker.pickImageFromCameraAndReturnUrl());
-                debugPrint(selectedImage.value);
                 userController.updateAvatar(urlImage: selectedImage.value).then((result) {
                   if(result){
                     setState(() {
