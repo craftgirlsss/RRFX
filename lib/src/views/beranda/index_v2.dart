@@ -523,8 +523,8 @@ class _IndexV2State extends State<IndexV2> {
                     Expanded(
                       child: Row(
                         children: [
-                          Icon(Clarity.date_line, color: Colors.black45, size: 13.0),
-                          const SizedBox(width: 5.0),
+                          Icon(Iconsax.clock_outline, color: Colors.black45, size: 12.0),
+                          const SizedBox(width: 3.0),
                           Flexible(child: Text(date ?? '', overflow: TextOverflow.ellipsis, style: GoogleFonts.inter(fontSize: 10.0)))
                         ],
                       ),

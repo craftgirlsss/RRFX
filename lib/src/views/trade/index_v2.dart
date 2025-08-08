@@ -139,25 +139,42 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
                   () {
                 if (controller.status.value == WebSocketStatus.connecting) {
                   return [
-                    const Center(child: CircularProgressIndicator()),
+                    SizedBox(
+                      width: size.width,
+                      height: size.height / 2,
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(color: CustomColor.defaultColor, strokeWidth: 1.0),
+                            SizedBox(height: 10.0),
+                            Text("Getting Market...")
+                          ],
+                        )
+                      )
+                    ),
                   ];
                 }
 
                 if (controller.status.value == WebSocketStatus.failed) {
                   return [
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.warning, color: Colors.red),
-                          const SizedBox(height: 10),
-                          const Text("Failed to connect to WebSocket", style: TextStyle(color: Colors.red)),
-                          const SizedBox(height: 10),
-                          CupertinoButton(
-                            onPressed: controller.reconnect,
-                            child: const Text("Retry"),
-                          ),
-                        ],
+                    SizedBox(
+                      width: size.width,
+                      height: size.height / 2,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.warning, color: Colors.red, size: 30.0),
+                            const SizedBox(height: 10),
+                            const Text("Failed to connect to WebSocket", style: TextStyle(color: Colors.red)),
+                            const SizedBox(height: 10),
+                            CupertinoButton(
+                              onPressed: controller.reconnect,
+                              child: Text("Retry", style: GoogleFonts.inter(color: CustomColor.defaultColor)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ];

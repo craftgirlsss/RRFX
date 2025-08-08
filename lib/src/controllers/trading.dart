@@ -229,6 +229,19 @@ class TradingController extends GetxController {
     }
   }
 
+  Future<Map<String, dynamic>> inputPassword({required String accountId, required String password}) async {
+    try {
+      Map<String, dynamic> result = await authService.post("market/account/update", {
+        'account_id': accountId,
+        'password': password
+      });
+      return result;
+
+    } catch (e) {
+      throw Exception("addTradingAccount error: $e");
+    }
+  }
+
   Future<Map<String, dynamic>> deleteTradingAccount({required String accountId}) async {
     try {
       Map<String, dynamic> result = await authService.post('market/account/delete', {

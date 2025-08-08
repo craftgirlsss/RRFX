@@ -13,7 +13,6 @@ import 'package:rrfx/src/components/textfields/void_textfield.dart';
 import 'package:rrfx/src/controllers/setting.dart';
 import 'package:get/get.dart';
 import 'package:rrfx/src/controllers/trading.dart';
-import 'package:rrfx/src/helpers/formatters/number_formatter.dart';
 import 'package:rrfx/src/helpers/handlers/image_picker.dart';
 import 'package:rrfx/src/helpers/variables/countrycurrency.dart';
 

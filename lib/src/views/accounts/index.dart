@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rrfx/src/components/alerts/default.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
+import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/components/languages/language_variable.dart';
 import 'package:rrfx/src/components/painters/loading_water.dart';
 import 'package:rrfx/src/controllers/trading.dart';
@@ -42,67 +44,84 @@ class _AccountsState extends State<Accounts> {
               title: LanguageGlobalVar.TRADING_ACCOUNT.tr,
               autoImplyLeading: false,
               bottom: PreferredSize(
-                preferredSize: Size.fromHeight(50),
-                child: Obx(
-                  () => tradingController.tradingAccountModels.value?.response.demo == null ? const SizedBox() : SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: Row(
+                preferredSize: Size.fromHeight(200),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Obx(
-                              () {
-                                if(tradingController.tradingAccountModels.value?.response.demo?.length == 0){
-                                  return SegmentedButton<String>(
-                                    segments: const <ButtonSegment<String>>[
-                                      ButtonSegment(
-                                        value: 'Demo',
-                                        label: Text('Demo'),
-                                      ),
-                                    ],
-                                    selected: <String>{selected},
-                                    onSelectionChanged: (newSelection) {
-                                      setState(() {
-                                        selected = newSelection.first;
-                                      });
-                                    },
-                                    multiSelectionEnabled: false,
-                                    showSelectedIcon: false,
-                                  );
-                                }
-                                return SegmentedButton<String>(
-                                  segments: const <ButtonSegment<String>>[
-                                    ButtonSegment(
-                                      value: 'Real',
-                                      label: Text('Real'),
-                                    ),
-                                    ButtonSegment(
-                                      value: 'Demo',
-                                      label: Text('Demo'),
-                                    ),
-                                    ButtonSegment(
-                                      value: 'Pending',
-                                      label: Text('Pending'),
-                                    ),
-
-                                  ],
-                                  selected: <String>{selected},
-                                  onSelectionChanged: (newSelection) {
-                                    setState(() {
-                                      selected = newSelection.first;
-                                    });
-                                  },
-                                  multiSelectionEnabled: false,
-                                  showSelectedIcon: false,
-                                );
-                              },
-                            ),
-                          ),
+                          Text("List Trading", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.defaultColor, height: 0.5)),
+                          Text("account", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: Colors.black)),
+                          const SizedBox(height: 5.0),
+                          Text("Daftar akun trading yang anda miliki. Anda dapat menggunakan untuk trading dengan platform MetaTrader 5 dan RRFX App.", style: TextStyle(color: CustomColor.textThemeLightSoftColor, fontSize: 15)),
                         ],
                       ),
                     ),
-                  ),
+                    Obx(
+                      () => tradingController.tradingAccountModels.value?.response.demo == null ? const SizedBox() : SizedBox(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Obx(
+                                  () {
+                                    if(tradingController.tradingAccountModels.value?.response.demo?.length == 0){
+                                      return SegmentedButton<String>(
+                                        segments: const <ButtonSegment<String>>[
+                                          ButtonSegment(
+                                            value: 'Demo',
+                                            label: Text('Demo'),
+                                          ),
+                                        ],
+                                        selected: <String>{selected},
+                                        onSelectionChanged: (newSelection) {
+                                          setState(() {
+                                            selected = newSelection.first;
+                                          });
+                                        },
+                                        multiSelectionEnabled: false,
+                                        showSelectedIcon: false,
+                                      );
+                                    }
+                                    return SegmentedButton<String>(
+                                      segments: const <ButtonSegment<String>>[
+                                        ButtonSegment(
+                                          value: 'Real',
+                                          label: Text('Real'),
+                                        ),
+                                        ButtonSegment(
+                                          value: 'Demo',
+                                          label: Text('Demo'),
+                                        ),
+                                        ButtonSegment(
+                                          value: 'Pending',
+                                          label: Text('Pending'),
+                                        ),
+                    
+                                      ],
+                                      selected: <String>{selected},
+                                      onSelectionChanged: (newSelection) {
+                                        setState(() {
+                                          selected = newSelection.first;
+                                        });
+                                      },
+                                      multiSelectionEnabled: false,
+                                      showSelectedIcon: false,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               )
             ),
