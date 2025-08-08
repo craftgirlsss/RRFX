@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rrfx/src/helpers/formatters/number_formatter.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -36,7 +37,6 @@ class _DocumentsState extends State<Documents> {
     super.initState();
     Future.delayed(Duration.zero, (){
       tradingController.getTradingAccount().then((result){
-
         if(tradingController.tradingAccountModels.value?.response.real?.length != 0){
           selectedAccountTradingHash(tradingController.tradingAccountModels.value?.response.real?[0].id);
           selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[0].login);
@@ -96,24 +96,40 @@ class _DocumentsState extends State<Documents> {
     ];
     return Scaffold(
       appBar: CustomAppBar.defaultAppBar(
-        title: "",
+        title: "Dokumen",
         autoImplyLeading: true,
         actions: [
           tradingController.tradingAccountModels.value?.response.real?.length != 0 ? CupertinoButton(
             onPressed: (){
+              // CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
+              //   return Obx(
+              //     () => ListTile(
+              //       title: Text(tradingController.accountTrading[i]['login'] != null ? tradingController.accountTrading[i]['login'].toString() : "0"),
+              //       onTap: (){
+              //         Get.back();
+              //         selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[i].login.toString());
+              //         selectedIndexAccountTrading(i);
+              //         selectedAccountTradingHash(tradingController.tradingAccountModels.value?.response.real?[i].id);
+              //       },
+              //       leading: Icon(TeenyIcons.candle_chart, color: CustomColor.defaultColor),
+              //       trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
+              //     ),
+              //   );
+              // }));
+
               CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
-                return Obx(
-                  () => ListTile(
-                    title: Text(tradingController.accountTrading[i]['login'] != null ? tradingController.accountTrading[i]['login'].toString() : "0"),
-                    onTap: (){
-                      Get.back();
-                      selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[i].login.toString());
-                      selectedIndexAccountTrading(i);
-                      selectedAccountTradingHash(tradingController.tradingAccountModels.value?.response.real?[i].id);
-                    },
-                    leading: Icon(TeenyIcons.candle_chart, color: CustomColor.defaultColor),
-                    trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
-                  ),
+                final account = tradingController.tradingAccountModels.value?.response.real?[i];
+                return ListTile(
+                  subtitle: Text("${account?.currency} - ${account?.login ?? "-"}", style: GoogleFonts.inter(fontWeight: FontWeight.w400, color: Colors.black45)),
+                  title: Text("${account?.namaTipeAkun ?? "-"} (1:${NumberFormatter.cleanNumber(account?.leverage ?? '0')})", style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                  onTap: (){
+                    selectedAccountTrading(tradingController.tradingAccountModels.value?.response.real?[i].login);
+                    selectedIndexAccountTrading(i);
+                    selectedAccountTradingHash(tradingController.tradingAccountModels.value?.response.real?[i].id);
+                    Get.back();
+                  },
+                  leading: Icon(Icons.group, color: CustomColor.defaultColor),
+                  trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
                 );
               }));
             },
@@ -147,6 +163,7 @@ class _DocumentsState extends State<Documents> {
                   return cardDocument(
                     title: data[i]['name'],
                     onDownload: (){
+                      print("${data[i]['url']}$selectedAccountTradingHash");
                       Get.to(() => PdfDownloadAndViewerPage(pdfUrl: "${data[i]['url']}$selectedAccountTradingHash"));
                     }
                   );

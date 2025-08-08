@@ -8,6 +8,7 @@ class CustomAppBar {
       title: Text(title ?? "AppBar"),
       surfaceTintColor: CustomColor.backgroundIcon,
       actions: actions,
+      forceMaterialTransparency: true,
       leading: autoImplyLeading == true ? IconButton(onPressed: () => Get.back(), icon: Icon(Icons.arrow_back_ios_new_rounded, size: 17, color: CustomColor.defaultColor)) : const SizedBox(),
       bottom: bottom,
     );

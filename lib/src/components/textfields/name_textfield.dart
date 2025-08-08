@@ -12,7 +12,8 @@ class NameTextField extends StatefulWidget {
   final String? fieldName;
   final TextEditingController? controller;
   final bool? useValidator;
-  const NameTextField({super.key, this.hintText, this.labelText, this.controller, this.readOnly, this.fieldName, this.useValidator});
+  final IconData? iconData;
+  const NameTextField({super.key, this.hintText, this.labelText, this.controller, this.readOnly, this.fieldName, this.useValidator, this.iconData});
 
   @override
   State<NameTextField> createState() => _NameTextFieldState();
@@ -57,7 +58,7 @@ class _NameTextFieldState extends State<NameTextField> {
           },
           decoration: InputDecoration(
             hintText: widget.hintText,
-            prefixIcon: SizedBox(width: 30, child: Icon(EvaIcons.person_outline, color: Colors.black54),),
+            prefixIcon: SizedBox(width: 30, child: Icon(widget.iconData ?? EvaIcons.person_outline, color: Colors.black54),),
             hintStyle: GoogleFonts.inter(
               color: CustomColor.textThemeDarkSoftColor,
               fontSize: 14

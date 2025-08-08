@@ -18,6 +18,7 @@ class UserController extends GetxController {
     try {
       Map<String, dynamic> response = await authService.get("/profile/info");
       isLoading(false);
+      print(response);
       responseMessage(response['message']);
       if(response['status'] != true) {
         return false;
@@ -42,6 +43,14 @@ class UserController extends GetxController {
     String? zipcode
   }) async {
     isLoading(true);
+    print(fullname);
+    print(gender);
+    print(dateOfBirth);
+    print(placeOfBirth);
+    print(address);
+    print(zipcode);
+    print(country);
+
     try {
       Map<String, dynamic> response = await authService.post("/profile/updateInfo",
         {

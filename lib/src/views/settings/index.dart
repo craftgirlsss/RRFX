@@ -204,7 +204,7 @@ class _SettingsState extends State<Settings> {
                 Obx(
                   () => SettingComponents.storageCard(
                     "Deposit",
-                    Bootstrap.box_arrow_down, haveRealAccount.value
+                    Bootstrap.box_arrow_in_down, haveRealAccount.value
                       ? () => Get.to(() => const Deposit())
                       : () => CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki akun real", type: SnackBarType.error)
                     ),

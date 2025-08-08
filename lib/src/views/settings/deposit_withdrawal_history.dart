@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/controllers/user_controller.dart';
 
@@ -42,13 +41,23 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Riwayat Deposit & Withdrawal"),
           bottom: TabBar(
+            indicator: BoxDecoration(
+              color: Colors.black12,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              )
+            ),
+            splashBorderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
             indicatorSize: TabBarIndicatorSize.tab,
             dividerColor: CustomColor.backgroundIcon,
             labelStyle: GoogleFonts.inter(fontWeight: FontWeight.w700),
@@ -172,7 +181,7 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
                     color: CustomColor.defaultColor,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(AntDesign.arrow_down_outline, color: Colors.white),
+                  child: Icon(AntDesign.arrow_up_outline, color: Colors.white),
                 ),
                 title: Text(result?.type ?? "-", style: GoogleFonts.inter(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold)),
                 subtitle: Text("${result?.amount}"),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 
 class PhoneTextField extends StatefulWidget {
@@ -54,6 +55,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
           },
           decoration: InputDecoration(
             hintText: widget.hintText,
+            prefixIcon: SizedBox(width: 30, child: Icon(EvaIcons.phone_outline, color: Colors.black54),),
             hintStyle: GoogleFonts.inter(
               color: CustomColor.textThemeDarkSoftColor,
               fontSize: 14
