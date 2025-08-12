@@ -4,7 +4,7 @@ void setupFirebaseMessaging() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   // ✅ Minta izin untuk iOS
-  NotificationSettings settings = await messaging.requestPermission(
+  await messaging.requestPermission(
     alert: true,
     badge: true,
     sound: true,

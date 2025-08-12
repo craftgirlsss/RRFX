@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -55,7 +54,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircularProgressIndicator(color: CustomColor.defaultColor),
+                const CircularProgressIndicator(color: CustomColor.secondaryColor, strokeWidth: 0.5,),
                 const SizedBox(height: 10.0),
                 const Text("Loading...")
               ],
@@ -146,7 +145,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                                 Clipboard.setData(ClipboardData(text: fullId));
                                 CustomScaffoldMessanger.showAppSnackBar(context, message: "Berhasil copy ID transaksi", type: SnackBarType.success);
                               },
-                              child: Icon(Iconsax.copy_outline, size: 15),
+                              child: Icon(Iconsax.copy_outline, size: 15, color: CustomColor.secondaryColor),
                             ),
                           ],
                         )
@@ -275,7 +274,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Nama Pemilik Rekening", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => Text(user.transactionDetail.value!.bankUser?.accountName ?? "-", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1))),
+                        Obx(() => Text(user.transactionDetail.value!.bankUser?.accountName ?? "-", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1)),
                       ],
                     ),
                     const SizedBox(height: 4),

@@ -37,7 +37,6 @@ class _ChangePasswordRealState extends State<ChangePasswordReal> {
     return Scaffold(
       appBar: CustomAppBar.defaultAppBar(
         autoImplyLeading: true,
-        title: "Change Password"
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -79,7 +78,6 @@ class _ChangePasswordRealState extends State<ChangePasswordReal> {
                         }else{
                           if(widget.tradingID != null){
                             tradingController.inputPassword(accountId: widget.tradingID!, password: confirmPasswordTextField.text).then((result){
-                              print(result['message']);
                               if(result['status']){
                                 CustomScaffoldMessanger.showAppSnackBar(context, message: result['message'], type: SnackBarType.success);
                               }

@@ -222,8 +222,8 @@ class _DepositState extends State<Deposit> {
                                 myAccountTrading.text = "${account?.login} - \$${account?.balance}";
                                 selectedTradingID(account?.id);
                               },
-                              leading: Icon(Icons.group, color: CustomColor.defaultColor),
-                              trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
+                              leading: Icon(Icons.group, color: CustomColor.secondaryColor),
+                              trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.secondaryColor),
                             );
                           }));
                           }

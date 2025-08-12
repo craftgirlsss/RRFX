@@ -405,51 +405,123 @@ class _IndexV2State extends State<IndexV2> {
                     () => Column(
                       children: List.generate(min(3, utilitiesController.newsModel.value?.response.length ?? 0), (i){
                         final result = utilitiesController.newsModel.value?.response;
-                        return CupertinoButton(
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
-                          onPressed: (){
-                            Get.to(() => NewsDetail(idNews: result?[i].id));
-                          },
-                          child: Container(
-                            color: Colors.white,
-                            width: double.infinity,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    result?[i].picture != null ? Image.network(result![i].picture!, width: 60, fit: BoxFit.cover) : Image.asset('assets/images/logo-rrfx-2.png', width: 60),
-                                    const SizedBox(width: 10.0),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Bussiness', style: GoogleFonts.inter(color: Colors.black45)),
-                                          Text(result?[i].title ?? '-', style: GoogleFonts.inter(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600), maxLines: 3),
-                                          const SizedBox(height: 5.0),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Text('Admin', style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0)),
-                                              Icon(OctIcons.dot, size: 13.0, color: Colors.black45),
-                                              Flexible(child: result?[i].tanggal != null ? Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.parse(result![i].tanggal!)), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis) : Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.now()), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const Divider(color: Colors.black12)
-                              ],
+                        if(result?[i].type == "News"){
+                          return CupertinoButton(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                            onPressed: (){
+                              Get.to(() => NewsDetail(idNews: result?[i].id));
+                            },
+                            child: Container(
+                              color: Colors.white,
+                              width: double.infinity,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      result?[i].picture != null ? Image.network(result![i].picture!, width: 60, fit: BoxFit.cover) : Image.asset('assets/images/logo-rrfx-2.png', width: 60),
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text('News', style: GoogleFonts.inter(color: Colors.black45)),
+                                            Text(result?[i].title ?? '-', style: GoogleFonts.inter(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600), maxLines: 3),
+                                            const SizedBox(height: 5.0),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Text('Admin', style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0)),
+                                                Icon(OctIcons.dot, size: 13.0, color: Colors.black45),
+                                                Flexible(child: result?[i].tanggal != null ? Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.parse(result![i].tanggal!)), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis) : Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.now()), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const Divider(color: Colors.black12)
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
+                        return const SizedBox();
                       }),
                     ),
                   )
                 ],
               ),
-            )
+            ),
+            Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(bottom: 16.0),
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Fundamentals", style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 20)),
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        child: Text("Lihat Semua", style: GoogleFonts.inter(fontWeight: FontWeight.w600),), onPressed: (){}
+                      )
+                    ]
+                  ),
+                  const SizedBox(height: 10.0),
+                  Obx(
+                    () => Column(
+                      children: List.generate(min(3, utilitiesController.newsModel.value?.response.length ?? 0), (i){
+                        final result = utilitiesController.newsModel.value?.response;
+                        if(utilitiesController.newsModel.value?.response[i].type != "News"){
+                          return CupertinoButton(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                            onPressed: (){
+                              Get.to(() => NewsDetail(idNews: result?[i].id));
+                            },
+                            child: Container(
+                              color: Colors.white,
+                              width: double.infinity,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      result?[i].picture != null ? Image.network(result![i].picture!, width: 60, fit: BoxFit.cover) : Image.asset('assets/images/logo-rrfx-2.png', width: 60),
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Fundamentals', style: GoogleFonts.inter(color: Colors.black45)),
+                                            Text(result?[i].title ?? '-', style: GoogleFonts.inter(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600), maxLines: 3),
+                                            const SizedBox(height: 5.0),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Text('Admin', style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0)),
+                                                Icon(OctIcons.dot, size: 13.0, color: Colors.black45),
+                                                Flexible(child: result?[i].tanggal != null ? Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.parse(result![i].tanggal!)), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis) : Text(DateFormat('EEEE, dd MMMM yyyy').add_jm().format(DateTime.now()), style: GoogleFonts.inter(color: Colors.black45, fontSize: 13.0), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const Divider(color: Colors.black12)
+                                ],
+                              ),
+                            ),
+                          ); 
+                        }
+                        return const SizedBox();
+                      }),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

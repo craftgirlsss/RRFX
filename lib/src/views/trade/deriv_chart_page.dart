@@ -252,7 +252,7 @@ class _DerivChartPageState extends State<DerivChartPage> {
                 const SizedBox(width: 5.0),
                 Text("-"),
                 const SizedBox(width: 5.0),
-                Obx(() => Text("\$ $balanceAccount"))
+                Obx(() => widget.balance != null ? Text(widget.balance) : Text("\$ $balanceAccount"))
               ],
             )
           ],

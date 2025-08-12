@@ -11,8 +11,6 @@ import 'package:rrfx/src/models/trades/trading_account_models.dart';
 import 'package:rrfx/src/views/accounts/change_password_real.dart';
 import 'package:rrfx/src/views/trade/deposit.dart';
 import 'package:rrfx/src/views/trade/deriv_chart_page.dart';
-import 'package:rrfx/src/views/trade/internal_transfer.dart';
-import 'package:rrfx/src/views/trade/withdrawal.dart';
 
 class DemoAccountInformation extends StatefulWidget {
   const DemoAccountInformation({super.key, this.loginID});
@@ -51,7 +49,6 @@ class _DemoAccountInformationState extends State<DemoAccountInformation> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar.defaultAppBar(
-        title: "Demo Account",
         autoImplyLeading: true
       ),
       body: Padding(
@@ -111,10 +108,10 @@ class _DemoAccountInformationState extends State<DemoAccountInformation> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.orange.shade50,
+                  color: CustomColor.backgroundIcon.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text("RATE ${selectedAccount?.rate != null ? NumberFormatter.formatCurrency(selectedAccount!.rate, currency: selectedAccount!.currency!) : ""}", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
+                child: Text("RATE ${selectedAccount?.rate != null ? NumberFormatter.formatCurrency(selectedAccount!.rate, currency: selectedAccount!.currency!) : ""}", style: TextStyle(color: CustomColor.secondaryColor, fontWeight: FontWeight.bold)),
               ),
               SizedBox(height: 8),
               Text("\$${selectedAccount?.balance ?? 0}", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
