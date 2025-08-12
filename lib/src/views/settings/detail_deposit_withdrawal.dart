@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -73,7 +75,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                     Obx(
                       () => CircleAvatar(
                         radius: 30,
-                        backgroundColor: CustomColor.defaultColor,
+                        backgroundColor: CustomColor.secondaryColor,
                         child: user.transactionDetail.value?.type == "Withdrawal" ? Icon(AntDesign.arrow_up_outline, size: 30) : Icon(AntDesign.arrow_down_outline, size: 30),
                       ),
                     ),
@@ -90,7 +92,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 3),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: CustomColor.defaultColor
+                        color: CustomColor.secondaryColor
                       ),
                       child: Obx(() => Text(user.transactionDetail.value?.type ?? '-', style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold))),
                     )
@@ -119,8 +121,35 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Transaksi ID", style: GoogleFonts.inter(fontSize: 14)),
-                        Obx(() => Text(user.transactionDetail.value?.id ?? "0", style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold))),
+                        Text(
+                          "Transaksi ID",
+                          style: GoogleFonts.inter(fontSize: 14),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Obx(() {
+                              final fullId = user.transactionDetail.value?.id ?? "0";
+                              final displayedId = fullId.length > 5 ? "${fullId.substring(0, 5)}..." : fullId;
+                              return Text(
+                                displayedId,
+                                style: GoogleFonts.inter(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            }),
+                            GestureDetector(
+                              onTap: () {
+                                final fullId = user.transactionDetail.value?.id ?? "0";
+                                Clipboard.setData(ClipboardData(text: fullId));
+                                CustomScaffoldMessanger.showAppSnackBar(context, message: "Berhasil copy ID transaksi", type: SnackBarType.success);
+                              },
+                              child: Icon(Iconsax.copy_outline, size: 15),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -128,7 +157,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Jumlah Transaksi", style: GoogleFonts.inter(fontSize: 14)),
-                        Obx(() => Text(user.transactionDetail.value?.amountReceived ?? "0", style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold))),
+                        Obx(() => Text(user.transactionDetail.value?.amountReceived ?? "0", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold))),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -137,7 +166,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Tanggal Transaksi", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => user.transactionDetail.value?.datetime != null ? Text(DateFormat("EEEE, dd MMM yyyy").format(DateTime.parse(user.transactionDetail.value!.datetime!)), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold), maxLines: 1) : Text('-'))),
+                        Flexible(child: Obx(() => user.transactionDetail.value?.datetime != null ? Text(DateFormat("EEEE, dd MMM yyyy").format(DateTime.parse(user.transactionDetail.value!.datetime!)), style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1) : Text('-'))),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -146,7 +175,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Waktu", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => user.transactionDetail.value?.datetime != null ? Text(DateFormat().add_jms().format(DateTime.parse(user.transactionDetail.value!.datetime!)), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold), maxLines: 1) : Text('-'))),
+                        Flexible(child: Obx(() => user.transactionDetail.value?.datetime != null ? Text(DateFormat().add_jms().format(DateTime.parse(user.transactionDetail.value!.datetime!)), style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1) : Text('-'))),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -155,7 +184,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Akun Trading", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.login ?? "0", style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold), maxLines: 1))),
+                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.login ?? "0", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1))),
                       ],
                     ),
                   ],
@@ -187,7 +216,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Nama Bank", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankAdmin?.name ?? "-", style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold), maxLines: 1))),
+                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankAdmin?.name ?? "-", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1))),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -196,7 +225,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Nomor Rekening Bank", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankAdmin?.accountNumber ?? "-", style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold), maxLines: 1))),
+                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankAdmin?.accountNumber ?? "-", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1))),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -229,7 +258,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Nama Bank", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankUser?.name ?? "-", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold), maxLines: 1))),
+                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankUser?.name ?? "-", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1))),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -238,7 +267,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Nomor Rekening Bank", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankUser?.accountNumber ?? "-", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold), maxLines: 1))),
+                        Flexible(child: Obx(() => Text(user.transactionDetail.value?.bankUser?.accountNumber ?? "-", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1))),
                       ],
                     ),
                     Row(
@@ -246,7 +275,7 @@ class _DetailDepositWithdrawalState extends State<DetailDepositWithdrawal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Nama Pemilik Rekening", style: GoogleFonts.inter(fontSize: 14)),
-                        Flexible(child: Obx(() => Text(user.transactionDetail.value!.bankUser?.accountName ?? "-", style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold), maxLines: 1))),
+                        Flexible(child: Obx(() => Text(user.transactionDetail.value!.bankUser?.accountName ?? "-", style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1))),
                       ],
                     ),
                     const SizedBox(height: 4),

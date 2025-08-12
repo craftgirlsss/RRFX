@@ -72,7 +72,7 @@ class _SignupState extends State<Signup> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Hello", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.defaultColor, height: 1.0,)),
+                        Text("Hello", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor, height: 1.0,)),
                         Text("there!", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: Colors.black)),
                         const SizedBox(height: 5.0),
                         Text("Lihat pergerakan harga pasar global secara langsung, dengan chart interaktif dan analisis teknikal lengkap.", style: TextStyle(color: CustomColor.textThemeLightSoftColor, fontSize: 15)),
@@ -126,7 +126,7 @@ class _SignupState extends State<Signup> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                       borderSide: BorderSide(
-                                        color: CustomColor.defaultColor
+                                        color: CustomColor.secondaryColor
                                       )
                                     ),
                                     enabledBorder: OutlineInputBorder(

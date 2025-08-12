@@ -17,7 +17,8 @@ import 'package:rrfx/src/helpers/handlers/image_picker.dart';
 import 'package:rrfx/src/helpers/variables/countrycurrency.dart';
 
 class Deposit extends StatefulWidget {
-  const Deposit({super.key});
+  const Deposit({super.key, this.idLogin});
+  final String? idLogin;
 
   @override
   State<Deposit> createState() => _DepositState();
@@ -50,6 +51,10 @@ class _DepositState extends State<Deposit> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
+      if(widget.idLogin != null){
+        selectedTradingID(widget.idLogin);
+        myAccountTrading.text = selectedTradingID.value;
+      }
       settingController.getAdminBank().then((resultBank){
         if(!resultBank){
           CustomAlert.alertError(message: settingController.responseMessage.value);
@@ -206,7 +211,8 @@ class _DepositState extends State<Deposit> {
                       NameTextField(controller: myBankType, fieldName: "Tipe", hintText: "Tipe", labelText: "Tipe", readOnly: true, useValidator: false),
                       Obx(
                         () => VoidTextField(controller: myAccountTrading, fieldName: "Akun Trading", hintText: "Akun Trading", labelText: "Akun Trading", onPressed: settingController.isLoading.value ? null : () async {
-                          CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
+                          if(widget.idLogin == null){
+                            CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
                             final account = tradingController.tradingAccountModels.value?.response.real?[i];
                             return ListTile(
                               subtitle: Text("${account?.currency} - ${account?.login ?? "-"}", style: GoogleFonts.inter(fontWeight: FontWeight.w400, color: Colors.black45)),
@@ -220,6 +226,7 @@ class _DepositState extends State<Deposit> {
                               trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
                             );
                           }));
+                          }
                         }),
                       ),
                       NumberTextField(controller: myAmount, fieldName: "Jumlah Deposit", hintText: "Jumlah Deposit", labelText: "Jumlah Deposit", maxLength: 1),

@@ -16,7 +16,7 @@ class DefaultButton {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)
             ),
-            backgroundColor: CustomColor.defaultColor,
+            backgroundColor: CustomColor.secondaryColor,
           ),
           child: Text(title ?? "Submit", style: GoogleFonts.inter(
           color: CustomColor.textThemeDarkColor,

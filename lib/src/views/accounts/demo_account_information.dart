@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
 import 'package:rrfx/src/components/colors/default.dart';
@@ -13,25 +14,25 @@ import 'package:rrfx/src/views/trade/deriv_chart_page.dart';
 import 'package:rrfx/src/views/trade/internal_transfer.dart';
 import 'package:rrfx/src/views/trade/withdrawal.dart';
 
-class AccountInformation extends StatefulWidget {
-  const AccountInformation({super.key, this.loginID});
+class DemoAccountInformation extends StatefulWidget {
+  const DemoAccountInformation({super.key, this.loginID});
   final String? loginID;
 
     @override
-    State<AccountInformation> createState() => _AccountInformationState();
+    State<DemoAccountInformation> createState() => _DemoAccountInformationState();
 }
 
-class _AccountInformationState extends State<AccountInformation> {
+class _DemoAccountInformationState extends State<DemoAccountInformation> {
   int _tabIndex = 0; // Untuk tab ACTIONS / INFO
 
   TradingController tradingController = Get.find();
-  Real? selectedAccount;
+  Demo? selectedAccount;
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, (){
-      var result = tradingController.tradingAccountModels.value?.response.real;
+      var result = tradingController.tradingAccountModels.value?.response.demo;
       if(result != null){
         for(int i = 0; i < result.length; i++){
           if(result[i].login == widget.loginID){
@@ -50,7 +51,7 @@ class _AccountInformationState extends State<AccountInformation> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar.defaultAppBar(
-        title: "Real Account",
+        title: "Demo Account",
         autoImplyLeading: true
       ),
       body: Padding(
@@ -163,8 +164,8 @@ class _AccountInformationState extends State<AccountInformation> {
     return Expanded(
       child: ListView(
         children: [
-          _menuItem(Icons.account_balance_wallet, 'Deposit', onPressed: () => Get.to(() => Deposit(idLogin: widget.loginID))),
-          _menuItem(Icons.show_chart, 'Trade', onPressed: () {
+          _menuItem(Iconsax.wallet_2_outline, 'Deposit', onPressed: () => Get.to(() => Deposit())),
+          _menuItem(Iconsax.chart_2_outline, 'Trade', onPressed: () {
             CustomMaterialBottomSheets.defaultBottomSheet(context, size: size, title: "Market Symbols", children: List.generate(tradingController.symbols.length, (i){
               return ListTile(
                 title: Text(tradingController.symbols[i]['symbol'], style: GoogleFonts.inter(color: CustomColor.textThemeLightColor)),
@@ -175,10 +176,7 @@ class _AccountInformationState extends State<AccountInformation> {
               );
             }));
           }),
-          _menuItem(Icons.money_off, 'Withdrawal', onPressed: () => Get.to(() => Withdrawal(idLogin: widget.loginID))),
-          _menuItem(Icons.sync_alt, 'Internal transfer', onPressed: () => Get.to(() => InternalTransfer())),
-          _menuItem(Icons.history, 'Operation history'),
-          _menuItem(Icons.password, 'Change Password', onPressed: () => Get.to(() => ChangePasswordReal(loginID: widget.loginID, tradingID: selectedAccount?.id))),
+          _menuItem(Iconsax.lock_1_outline, 'Change Password', onPressed: () => Get.to(() => ChangePasswordReal(loginID: widget.loginID, tradingID: selectedAccount?.id))),
         ],
       ),
     );

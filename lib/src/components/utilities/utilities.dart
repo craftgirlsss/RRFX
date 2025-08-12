@@ -118,11 +118,11 @@ class UtilitiesComponents {
             value: checkedRead?.value,
             onChanged: (value) => checkedRead?.value = !checkedRead.value,                                
             checkColor: Colors.white, // Warna icon centang
-            fillColor: checkedRead?.value == true ? WidgetStatePropertyAll(CustomColor.defaultColor) : WidgetStatePropertyAll(Colors.white),
+            fillColor: checkedRead?.value == true ? WidgetStatePropertyAll(CustomColor.secondaryColor) : WidgetStatePropertyAll(Colors.white),
             side: BorderSide(
               width: 1.0,
               color: checkedRead?.value == true
-                ? CustomColor.defaultColor
+                ? CustomColor.secondaryColor
                 : CustomColor.textThemeDarkSoftColor, // ← warna border dinamis
             ),
             shape: RoundedRectangleBorder(

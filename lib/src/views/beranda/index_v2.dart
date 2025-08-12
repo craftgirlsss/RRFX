@@ -14,11 +14,11 @@ import 'package:rrfx/src/controllers/trading.dart';
 import 'package:rrfx/src/controllers/utilities.dart';
 import 'package:rrfx/src/helpers/formatters/number_formatter.dart';
 import 'package:rrfx/src/helpers/formatters/regex_formatter.dart';
+import 'package:rrfx/src/views/accounts/account_information.dart';
 import 'package:rrfx/src/views/accounts/create_real.dart';
 import 'package:rrfx/src/views/beranda/all_trading_signals.dart';
 import 'package:rrfx/src/views/beranda/lainnya.dart';
 import 'package:rrfx/src/views/beranda/news_detail.dart';
-import 'package:rrfx/src/views/beranda/notifications_page.dart';
 import 'package:rrfx/src/views/beranda/products_page.dart';
 import 'package:rrfx/src/views/trade/deposit.dart';
 import 'package:rrfx/src/views/trade/deriv_chart_page.dart';
@@ -119,8 +119,8 @@ class _IndexV2State extends State<IndexV2> {
                     selectedTypeAccount(tradingController.tradingAccountModels.value?.response.real?[i].namaTipeAkun);
                     selectedEquityAccount(tradingController.tradingAccountModels.value?.response.real?[i].marginFree);
                   },
-                  leading: Icon(Icons.group, color: CustomColor.defaultColor),
-                  trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
+                  leading: Icon(Icons.group, color: CustomColor.secondaryColor),
+                  trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.secondaryColor),
                 );
               }));
             },
@@ -144,9 +144,9 @@ class _IndexV2State extends State<IndexV2> {
           ),
         ),
         actions: [
-          CupertinoButton(child: Icon(EvaIcons.bell_outline, size: 25, color: CustomColor.secondaryColor), onPressed: (){
-            Get.to(() => const NotificationsPage());
-          })
+          // CupertinoButton(child: Icon(EvaIcons.bell_outline, size: 25, color: CustomColor.secondaryColor), onPressed: (){
+          //   Get.to(() => const NotificationsPage());
+          // })
         ],
       ),
       body: SingleChildScrollView(
@@ -265,7 +265,9 @@ class _IndexV2State extends State<IndexV2> {
                         ),
                         CupertinoButton(
                           padding: EdgeInsets.zero,
-                          onPressed: (){},
+                          onPressed: (){
+                            Get.to(() => AccountInformation(loginID: selectedAccountTrading.value));
+                          },
                           child: Text("Lihat Detail", style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 17, color: CustomColor.secondaryColor)),
                         )
                       ],
@@ -310,7 +312,7 @@ class _IndexV2State extends State<IndexV2> {
                             Container(
                               padding: EdgeInsets.all(7),
                               decoration: BoxDecoration(
-                                color: CustomColor.backgroundIcon,
+                                color: CustomColor.backgroundIcon.withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Icon(

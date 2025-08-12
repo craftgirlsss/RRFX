@@ -17,7 +17,8 @@ import 'package:rrfx/src/controllers/trading.dart';
 import 'package:rrfx/src/controllers/utilities.dart';
 
 class Withdrawal extends StatefulWidget {
-  const Withdrawal({super.key});
+  const Withdrawal({super.key, this.idLogin});
+  final String? idLogin;
 
   @override
   State<Withdrawal> createState() => _WithdrawalState();
@@ -45,6 +46,10 @@ class _WithdrawalState extends State<Withdrawal> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, (){
+      if(widget.idLogin != null){
+        selectedTradingID(widget.idLogin);
+        myAccountTrading.text = selectedTradingID.value;
+      }
       settingController.getUserBank().then((resultGetMyBank){
         if(!resultGetMyBank){
           CustomAlert.alertError(message: settingController.responseMessage.value);
@@ -148,20 +153,22 @@ class _WithdrawalState extends State<Withdrawal> {
                       NameTextField(controller: myBankType, fieldName: "Tipe", hintText: "Tipe", labelText: "Tipe", readOnly: true, useValidator: false),
                       Obx(
                         () => VoidTextField(controller: myAccountTrading, fieldName: "Akun Trading", hintText: "Akun Trading", labelText: "Akun Trading", onPressed: settingController.isLoading.value ? null : () async {
-                          CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
+                          if(widget.idLogin == null){
+                            CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.tradingAccountModels.value?.response.real?.length ?? 0, (i){
                             final account = tradingController.tradingAccountModels.value?.response.real?[i];
-                            return ListTile(
-                              subtitle: Text("${account?.currency} - ${account?.login ?? "-"}", style: GoogleFonts.inter(fontWeight: FontWeight.w400, color: Colors.black45)),
-                              title: Text("${account?.namaTipeAkun ?? "-"} (\$${account?.balance})", style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
-                              onTap: (){
-                                Navigator.pop(context);
-                                myAccountTrading.text = "${account?.login} - \$${account?.balance}";
-                                selectedTradingID(account?.id);
-                              },
-                              leading: Icon(Icons.group, color: CustomColor.defaultColor),
-                              trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
-                            );
-                          }));
+                              return ListTile(
+                                subtitle: Text("${account?.currency} - ${account?.login ?? "-"}", style: GoogleFonts.inter(fontWeight: FontWeight.w400, color: Colors.black45)),
+                                title: Text("${account?.namaTipeAkun ?? "-"} (\$${account?.balance})", style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                                onTap: (){
+                                  Navigator.pop(context);
+                                  myAccountTrading.text = "${account?.login} - \$${account?.balance}";
+                                  selectedTradingID(account?.id);
+                                },
+                                leading: Icon(Icons.group, color: CustomColor.defaultColor),
+                                trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
+                              );
+                            }));
+                          }
                         }),
                       ),
                       Obx(

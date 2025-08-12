@@ -75,7 +75,7 @@ class _SignInState extends State<SignIn> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Welcome", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.defaultColor, height: 1.0,)),
+                    Text("Welcome", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor, height: 1.0,)),
                     Text("back!", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: Colors.black)),
                     const SizedBox(height: 5.0),
                     Text("Lihat pergerakan harga pasar global secara langsung, dengan chart interaktif dan analisis teknikal lengkap.", style: TextStyle(color: CustomColor.textThemeLightSoftColor, fontSize: 15)),
@@ -106,7 +106,7 @@ class _SignInState extends State<SignIn> {
                             ),
                             child: Text(LanguageGlobalVar.LUPA.tr, style: GoogleFonts.inter(
                               fontWeight: FontWeight.bold,
-                              color: CustomColor.defaultColor
+                              color: CustomColor.secondaryColor
                             ))
                           ),
                           SizedBox(
@@ -153,7 +153,7 @@ class _SignInState extends State<SignIn> {
                                   style: TextButton.styleFrom(padding: EdgeInsets.only(left: 5)),
                                   child: Text(LanguageGlobalVar.REGIST_NOW.tr, style: GoogleFonts.inter(
                                     fontWeight: FontWeight.bold,
-                                    color: CustomColor.defaultColor
+                                    color: CustomColor.secondaryColor
                                   ))
                                 ),
                               ],

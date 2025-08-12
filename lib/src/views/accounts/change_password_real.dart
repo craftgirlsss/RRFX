@@ -46,7 +46,7 @@ class _ChangePasswordRealState extends State<ChangePasswordReal> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Change", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.defaultColor, height: 1.0,)),
+              Text("Change", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor, height: 1.0,)),
               Text("password Meta", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: Colors.black)),
               const SizedBox(height: 5.0),
               Text("Ubah password akun ${widget.loginID} Meta Trader 5 anda dengan menginputkan password baru.", style: TextStyle(color: CustomColor.textThemeLightSoftColor, fontSize: 15)),

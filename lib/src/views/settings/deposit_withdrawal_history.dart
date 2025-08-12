@@ -148,6 +148,7 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
                   height: 30,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: CustomColor.secondaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)
                       )
@@ -178,7 +179,7 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: CustomColor.defaultColor,
+                    color: CustomColor.secondaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(AntDesign.arrow_up_outline, color: Colors.white),
@@ -189,6 +190,7 @@ class _DepositWithdrawalHistoryState extends State<DepositWithdrawalHistory> {
                   height: 30,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: CustomColor.secondaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)
                       )

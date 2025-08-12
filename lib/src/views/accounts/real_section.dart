@@ -46,7 +46,7 @@ class _RealSectionState extends State<RealSection> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return RefreshIndicator(
-      color: CustomColor.defaultColor,
+      color: CustomColor.secondaryColor,
       onRefresh: () async {},
       child: Obx(
         (){
@@ -88,7 +88,7 @@ class _RealSectionState extends State<RealSection> {
                       icon: Icon(Icons.add_circle_outlined, color: Colors.white),
                       label: Text("Buat Akun Real Baru"),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: CustomColor.defaultColor,
+                        backgroundColor: CustomColor.secondaryColor,
                         foregroundColor: Colors.white,
                       ),
                     ),
@@ -105,11 +105,11 @@ class _RealSectionState extends State<RealSection> {
                         children: [
                           Obx(
                             () => ListTile(
-                              leading: Icon(Bootstrap.plug, color: CustomColor.defaultColor),
+                              leading: Icon(Bootstrap.plug, color: CustomColor.secondaryColor),
                               title: accountActive[i]['active']?.value == true ? Text("Disconnect") : Text("Connect"),
                               trailing: Obx(
                                 () => Switch(
-                                  activeColor: CustomColor.defaultColor,
+                                  activeColor: CustomColor.secondaryColor,
                                   value: accountActive[i]['active']!.value,
                                   onChanged: (value) {
                                     accountActive[i]['active']!.value = !accountActive[i]['active']!.value;
@@ -160,7 +160,7 @@ class _RealSectionState extends State<RealSection> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
           color: Colors.white,
-          border: Border.all(color: CustomColor.defaultColor)
+          border: Border.all(color: CustomColor.secondaryBackground)
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +169,7 @@ class _RealSectionState extends State<RealSection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(currencyType != null ? currencyType.toUpperCase() : "-", style: TextStyle(fontFamily: "OCRA", fontSize: 13, color: CustomColor.defaultColor)),
+                Text(currencyType != null ? currencyType.toUpperCase() : "-", style: GoogleFonts.inter(fontSize: 13, color: CustomColor.secondaryColor)),
                 // Image.asset('assets/icons/ic_launcher.png', width: 50)
                 GestureDetector(
                   onTap: onTap,
@@ -177,13 +177,13 @@ class _RealSectionState extends State<RealSection> {
                     padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
-                      border: Border.all(color: isConnected ? Colors.green : Colors.red)
+                      border: Border.all(color: isConnected ? Colors.green : Colors.grey.shade500)
                     ),
                     child: Row(
                       children: [
-                        isConnected ? Icon(Icons.circle, size: 14.0, color: Colors.green) : Icon(Icons.circle, size: 14.0, color: Colors.red),
+                        isConnected ? Icon(Icons.circle, size: 14.0, color: Colors.green) : Icon(Icons.circle, size: 14.0, color: Colors.grey.shade500),
                         const SizedBox(width: 5.0),
-                        isConnected ? Text("Connected") : Text("Disconnected")
+                        isConnected ? Text("Connected", style: GoogleFonts.inter(color: Colors.green)) : Text("Disconnected", style: GoogleFonts.inter(color: Colors.grey.shade500))
                       ],
                     ),
                   ),
@@ -192,18 +192,18 @@ class _RealSectionState extends State<RealSection> {
             ),
       
             // Number Account
-            Icon(Icons.candlestick_chart, color: CustomColor.defaultColor, size: 24),
+            Icon(Icons.candlestick_chart, color: CustomColor.secondaryColor, size: 24),
             const SizedBox(height: 10),
-            Text(accountNumber != null ? NumberFormatter.formatCardNumber(accountNumber) : "0", style: TextStyle(fontFamily: "OCRA", fontSize: 20, fontWeight: FontWeight.bold, color: CustomColor.defaultColor), maxLines: 1),
+            Text(accountNumber != null ? NumberFormatter.formatCardNumber(accountNumber) : "0", style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold, color: CustomColor.secondaryColor), maxLines: 1),
             const SizedBox(height: 5),
-            Text(balance == null ? "\$0" : "\$${balance.split('.').first}", style: TextStyle(fontFamily: "OCRA", fontSize: 15, color: CustomColor.defaultColor)),
+            Text(balance == null ? "\$0" : "\$${balance.split('.').first}", style: GoogleFonts.inter(fontSize: 15, color: CustomColor.secondaryColor)),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(type != null ? type.toUpperCase() : "-", style: TextStyle(fontFamily: "OCRA", fontSize: 13, color: CustomColor.defaultColor)),
-                Text(" / ", style: TextStyle(fontFamily: "OCRA", fontSize: 13, color: Colors.black54)),
-                Text(leverage != null ? leverage.split('.').first : "1:100", style: TextStyle(fontFamily: "OCRA", fontSize: 13, color: CustomColor.defaultColor)),
+                Text(type != null ? type.toUpperCase() : "-", style: GoogleFonts.inter(fontSize: 13, color: CustomColor.secondaryColor)),
+                Text(" / ", style: GoogleFonts.inter(fontSize: 13, color: Colors.black54)),
+                Text(leverage != null ? leverage.split('.').first : "1:100", style: GoogleFonts.inter(fontSize: 13, color: CustomColor.secondaryColor)),
               ],
             ),
             const SizedBox(height: 15),
@@ -216,9 +216,9 @@ class _RealSectionState extends State<RealSection> {
                   },
                   child: Row(
                     children: [
-                      Icon(CupertinoIcons.arrow_down_circle, color: CustomColor.defaultColor),
+                      Icon(CupertinoIcons.arrow_down_circle, color: CustomColor.secondaryColor),
                       const SizedBox(width: 2),
-                      Text("Deposit", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: CustomColor.defaultColor))
+                      Text("Deposit", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor))
                     ],
                   ),
                 ),
@@ -229,9 +229,9 @@ class _RealSectionState extends State<RealSection> {
                   },
                   child: Row(
                     children: [
-                      Icon(CupertinoIcons.arrow_up_circle, color: CustomColor.defaultColor),
+                      Icon(CupertinoIcons.arrow_up_circle, color: CustomColor.secondaryColor),
                       const SizedBox(width: 2),
-                      Text("Withdrawal", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: CustomColor.defaultColor))
+                      Text("Withdrawal", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor))
                     ],
                   ),
                 ),
@@ -242,8 +242,8 @@ class _RealSectionState extends State<RealSection> {
                   },
                   child: Row(
                     children: [
-                      Icon(MingCute.pdf_line, color: CustomColor.defaultColor),
-                      Text("Documents", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: CustomColor.defaultColor))
+                      Icon(MingCute.pdf_line, color: CustomColor.secondaryColor),
+                      Text("Documents", style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor))
                     ],
                   ),
                 ),

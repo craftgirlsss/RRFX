@@ -50,7 +50,7 @@ class _ForgotState extends State<Forgot> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Forgot", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.defaultColor, height: 1.0,)),
+                      Text("Forgot", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor, height: 1.0,)),
                       Text("password", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: Colors.black)),
                       const SizedBox(height: 5.0),
                       Text("Inputkan alamat Email yang telah didaftarkan sebelumnya, sistem akan mengirimkan kode password baru ke alamat email terkait.", style: TextStyle(color: CustomColor.textThemeLightSoftColor, fontSize: 15)),

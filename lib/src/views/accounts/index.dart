@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rrfx/src/components/alerts/default.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
-import 'package:rrfx/src/components/languages/language_variable.dart';
 import 'package:rrfx/src/components/painters/loading_water.dart';
 import 'package:rrfx/src/controllers/trading.dart';
 import 'package:rrfx/src/views/accounts/demo_section.dart';
@@ -19,7 +18,7 @@ class Accounts extends StatefulWidget {
 }
 
 class _AccountsState extends State<Accounts> {
-  String selected = "Demo";
+  String selected = "Real";
   RxBool isLoading = false.obs;
   TradingController tradingController = Get.put(TradingController());
 
@@ -41,7 +40,6 @@ class _AccountsState extends State<Accounts> {
         children: [
           Scaffold(
             appBar: CustomAppBar.defaultAppBar(
-              title: LanguageGlobalVar.TRADING_ACCOUNT.tr,
               autoImplyLeading: false,
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(200),
@@ -53,7 +51,7 @@ class _AccountsState extends State<Accounts> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("List Trading", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.defaultColor, height: 0.5)),
+                          Text("List Trading", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: CustomColor.secondaryColor, height: 0.5)),
                           Text("account", style: GoogleFonts.inter(fontSize: 50, fontWeight: FontWeight.w700, color: Colors.black)),
                           const SizedBox(height: 5.0),
                           Text("Daftar akun trading yang anda miliki. Anda dapat menggunakan untuk trading dengan platform MetaTrader 5 dan RRFX App.", style: TextStyle(color: CustomColor.textThemeLightSoftColor, fontSize: 15)),
@@ -72,6 +70,10 @@ class _AccountsState extends State<Accounts> {
                                   () {
                                     if(tradingController.tradingAccountModels.value?.response.demo?.length == 0){
                                       return SegmentedButton<String>(
+                                        style: SegmentedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          textStyle: GoogleFonts.inter(color: Colors.white)
+                                        ),
                                         segments: const <ButtonSegment<String>>[
                                           ButtonSegment(
                                             value: 'Demo',
@@ -89,6 +91,11 @@ class _AccountsState extends State<Accounts> {
                                       );
                                     }
                                     return SegmentedButton<String>(
+                                      style: SegmentedButton.styleFrom(
+                                        side: BorderSide(color: CustomColor.secondaryColor),
+                                        backgroundColor: Colors.transparent,
+                                        textStyle: GoogleFonts.inter(color: Colors.white)
+                                      ),
                                       segments: const <ButtonSegment<String>>[
                                         ButtonSegment(
                                           value: 'Real',
@@ -125,21 +132,24 @@ class _AccountsState extends State<Accounts> {
                 )
               )
             ),
-            body: Obx(() {
-              if(tradingController.isLoading.value){
-                return SizedBox();
-              }else if(selected == "Demo"){
-                return DemoSection();
-              }else if(selected == "Real"){
-                return RealSection();
-              }else if(selected == "Pending"){
-                return PendingAccount();
-              }else{
-                return SizedBox(
-                  child: Text("Tidak dikenali"),
-                );
-              }
-            }),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Obx(() {
+                if(tradingController.isLoading.value){
+                  return SizedBox();
+                }else if(selected == "Demo"){
+                  return DemoSection();
+                }else if(selected == "Real"){
+                  return RealSection();
+                }else if(selected == "Pending"){
+                  return PendingAccount();
+                }else{
+                  return SizedBox(
+                    child: Text("Tidak dikenali"),
+                  );
+                }
+              }),
+            ),
             // body: Obx(() => tradingController.isLoading.value ? const SizedBox() : selected == "Demo" ? DemoSection() : RealSection())
           ),
           Obx(() => tradingController.isLoading.value ? LoadingWater() : const SizedBox())

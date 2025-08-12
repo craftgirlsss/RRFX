@@ -81,7 +81,7 @@ class _SettingsState extends State<Settings> {
                 textButton: "Ya"
               );
             },
-            child: Icon(MingCute.exit_line, color: CustomColor.defaultColor),
+            child: Icon(MingCute.exit_line, color: CustomColor.secondaryColor),
           )
         ]
       ),

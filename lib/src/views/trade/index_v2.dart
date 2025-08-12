@@ -66,7 +66,7 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
       slivers: [
         SliverAppBar(
           actionsPadding: EdgeInsets.zero,
-          backgroundColor: CustomColor.defaultColor,
+          backgroundColor: CustomColor.secondaryColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -95,8 +95,8 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
                         selectedIndexAccountTrading(i);
                         selectedBalanceAccount(tradingController.tradingAccountModels.value?.response.real?[i].balance);
                       },
-                      leading: Icon(Icons.group, color: CustomColor.defaultColor),
-                      trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
+                      leading: Icon(Icons.group, color: CustomColor.secondaryColor),
+                      trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.secondaryColor),
                     );
                   }));
                 },
@@ -109,7 +109,7 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
           expandedHeight: 210.0,
           flexibleSpace: FlexibleSpaceBar(
             background: Container(
-              color: CustomColor.defaultColor,
+              color: CustomColor.secondaryColor,
               padding: EdgeInsets.only(top: appBarHeight),
               height: appBarHeight + paddingTop,
               child: Center(
@@ -146,7 +146,7 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CircularProgressIndicator(color: CustomColor.defaultColor, strokeWidth: 1.0),
+                            CircularProgressIndicator(color: CustomColor.secondaryColor, strokeWidth: 1.0),
                             SizedBox(height: 10.0),
                             Text("Getting Market...")
                           ],
