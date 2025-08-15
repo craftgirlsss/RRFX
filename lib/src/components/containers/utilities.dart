@@ -59,4 +59,75 @@ class UtilitiesWidget {
       ),
     );
   }
+
+  static GestureDetector uploadPhotoV2({
+    String? title,
+    String? urlPhoto,
+    Function()? onPressed,
+    bool? isImageOnline,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15.0),
+        width: double.infinity,
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: CustomColor.backgroundIcon.withOpacity(0.5),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: (urlPhoto != null && urlPhoto.isNotEmpty)
+              ? isImageOnline == true
+                  ? Image.network(
+                      urlPhoto,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return buildPlaceholder(title);
+                      },
+                    )
+                  : Image.file(
+                      File(urlPhoto),
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return buildPlaceholder(title);
+                      },
+                    )
+              : buildPlaceholder(title),
+        ),
+      ),
+    );
+  }
+
+  static Widget buildPlaceholder(String? title) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white38,
+            ),
+            child: Icon(
+              CupertinoIcons.camera_fill,
+              color: CustomColor.secondaryColor,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "Please take photo ${title ?? ""}",
+            style: GoogleFonts.inter(
+              color: CustomColor.secondaryColor,
+              fontSize: 16.0,
+            ),
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
+    );
+  }
+
 }

@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rrfx/src/components/alerts/default.dart';
+import 'package:rrfx/src/views/mainpage.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/components/containers/utilities.dart';
@@ -56,33 +57,17 @@ class _Step14PenyelesaianPerselisihan extends State<Step14PenyelesaianPerselisih
           autoImplyLeading: true,
           title: "Peraturan",
           actions: [
-            // CupertinoButton(
-            //   onPressed: (){
-            //     CustomMaterialBottomSheets.defaultBottomSheet(context, title: "Pilih Akun Trading", size: size, children: List.generate(tradingController.accountTrading.length, (i){
-            //       return Obx(
-            //         () => ListTile(
-            //           title: Text(tradingController.accountTrading[i]['login'] != null ? tradingController.accountTrading[i]['login'].toString() : "0"),
-            //           onTap: (){
-            //             Get.back();
-            //             selectedAccountTrading(tradingController.accountTrading[i]['id'].toString());
-            //             selectedIndexAccountTrading(i);
-            //             print(selectedAccountTrading);
-            //           },
-            //           leading: Icon(TeenyIcons.candle_chart, color: CustomColor.defaultColor),
-            //           trailing: Icon(AntDesign.arrow_right_outline, color: CustomColor.defaultColor),
-            //         ),
-            //       );
-            //     }));
-            //   },
-            //   padding: EdgeInsets.zero,
-            //   child: Icon(Bootstrap.person_fill_gear, color: CustomColor.defaultColor)
-            // ),
             CupertinoButton(
               onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                String? accessToken = prefs.getString('accessToken');
-                debugPrint(accessToken);
-                // Get.offAll(() => const Mainpage());
+                CustomAlert.alertDialogCustomInfo(
+                  title: "Confirmation",
+                  message: "Are you sure you want to cancel? All data will be lost.",
+                  moreThanOneButton: true,
+                  onTap: () {
+                    Get.offAll(() => const Mainpage());
+                  },
+                  textButton: "Yes",
+                );
               },
               child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
             ),

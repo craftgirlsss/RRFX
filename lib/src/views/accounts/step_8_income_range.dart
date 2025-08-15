@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rrfx/src/components/alerts/default.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/components/containers/utilities.dart';
@@ -58,16 +59,24 @@ class _Step8IncomeRange extends State<Step8IncomeRange> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar.defaultAppBar(
-            autoImplyLeading: true,
-            title: "Investment",
-            actions: [
-              CupertinoButton(
-                onPressed: (){
-                  Get.offAll(() => const Mainpage());
-                },
-                child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
-              )
-            ]
+          autoImplyLeading: true,
+          title: "Investment",
+          actions: [
+            CupertinoButton(
+              onPressed: (){
+                CustomAlert.alertDialogCustomInfo(
+                  title: "Confirmation",
+                  message: "Are you sure you want to cancel? All data will be lost.",
+                  moreThanOneButton: true,
+                  onTap: () {
+                    Get.offAll(() => const Mainpage());
+                  },
+                  textButton: "Yes",
+                );
+              },
+              child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
+            )
+          ]
         ),
         body: SingleChildScrollView(
           child: Column(

@@ -59,16 +59,24 @@ class _Step5InvestmentGoal extends State<Step5InvestmentGoal> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar.defaultAppBar(
-            autoImplyLeading: true,
-            title: "Investment",
-            actions: [
-              CupertinoButton(
-                onPressed: (){
-                  Get.offAll(() => const Mainpage());
-                },
-                child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
-              )
-            ]
+          autoImplyLeading: true,
+          title: "Investment",
+          actions: [
+            CupertinoButton(
+              onPressed: (){
+                CustomAlert.alertDialogCustomInfo(
+                  title: "Confirmation",
+                  message: "Are you sure you want to cancel? All data will be lost.",
+                  moreThanOneButton: true,
+                  onTap: () {
+                    Get.offAll(() => const Mainpage());
+                  },
+                  textButton: "Yes",
+                );
+              },
+              child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
+            )
+          ]
         ),
         body: SingleChildScrollView(
           child: Column(

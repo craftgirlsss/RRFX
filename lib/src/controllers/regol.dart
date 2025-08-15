@@ -59,6 +59,7 @@ class RegolController extends GetxController {
         'account-type' : accountSuffix
       });
       isLoading(false);
+      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
