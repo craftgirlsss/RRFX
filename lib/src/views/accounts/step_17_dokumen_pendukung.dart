@@ -153,11 +153,11 @@ class _Step17UploadPhotoState extends State<Step17UploadPhoto> {
                                   ),
                                 ),
                                 Obx(
-                                      () => Row(
+                                  () => Row(
                                     children: [
                                       Checkbox(
                                         fillColor: WidgetStatePropertyAll(Colors.white),
-                                        checkColor: CustomColor.defaultColor,
+                                        checkColor: CustomColor.secondaryColor,
                                         side: WidgetStateBorderSide.resolveWith((Set<WidgetState> states) {
                                           if (states.contains(WidgetState.selected)) {
                                             return const BorderSide(color: Colors.black45); // tetap tampil meski dicentang

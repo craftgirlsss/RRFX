@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rrfx/src/components/alerts/default.dart';
+import 'package:rrfx/src/components/alerts/scaffold_messanger_alert.dart';
+import 'package:rrfx/src/views/accounts/local_pdf_view.dart';
 import 'package:rrfx/src/views/mainpage.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
@@ -11,7 +13,6 @@ import 'package:rrfx/src/components/languages/language_variable.dart';
 import 'package:rrfx/src/controllers/company_controller.dart';
 import 'package:rrfx/src/controllers/regol.dart';
 import 'package:rrfx/src/helpers/variables/global_variables.dart';
-import 'package:rrfx/src/views/accounts/pdf_viewers_page.dart';
 import 'package:rrfx/src/views/accounts/step_16_success.dart';
 import 'components/step_position.dart';
 
@@ -27,6 +28,7 @@ class _Step14PenyelesaianPerselisihan extends State<Step14PenyelesaianPerselisih
   RegolController regolController = Get.put(RegolController());
   final _formKey = GlobalKey<FormState>();
   RxString selectedAccountTrading = "".obs;
+  RxBool selectedStatement = false.obs;
   RxInt selectedIndexAccountTrading = 0.obs;
 
   @override
@@ -85,108 +87,174 @@ class _Step14PenyelesaianPerselisihan extends State<Step14PenyelesaianPerselisih
                     subtitle: "Saya menyatakan telah membaca dan menyetujui masing masing dokumen yang dikeluarkan oleh ${GlobalVariable.namaPerusahaan} sebagai berikut:",
                     children: [
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Profile Perusahaan Pialang Berjangka', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.profilePerusahaan(acc: selectedAccountTrading.value), title: "Profil Perusahaan Pialang Berjangka"));
+                          print(companyController.profilePerusahaan(acc: selectedAccountTrading.value));
+                          Get.to(() => LocalPdfViewer(
+                            pdfUrl: companyController.profilePerusahaan(acc: selectedAccountTrading.value),
+                            title: "Profil Perusahaan Pialang Berjangka",
+                          ));
+                          // Get.to(() => WebPdfViewer(pdfUrl: companyController.profilePerusahaan(acc: selectedAccountTrading.value), title: "Profil Perusahaan Pialang Berjangka"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Pernyataan Simulasi', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.pernyataanSimulasi(acc: selectedAccountTrading.value), title: "Pernyataan Simulasi"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.pernyataanSimulasi(acc: selectedAccountTrading.value), title: "Pernyataan Simulasi"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Pernyataaan Telah Berpengalaman', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.pernyataanPengalaman(acc: selectedAccountTrading.value), title: "Pernyataan Pengalaman"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.pernyataanPengalaman(acc: selectedAccountTrading.value), title: "Pernyataan Pengalaman"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Pernyataaan Pengungkapan', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.suratPernyataanPenerimaanNasabah(acc: selectedAccountTrading.value), title: "Pernyataaan Pengungkapan"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.suratPernyataanPenerimaanNasabah(acc: selectedAccountTrading.value), title: "Pernyataaan Pengungkapan"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Aplikasi Pembukaaan Rekening Transaksi', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.aplikasiPembukaanRekening(acc: selectedAccountTrading.value), title: "Aplikasi Pembukaaan Rekening Transaksi"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.aplikasiPembukaanRekening(acc: selectedAccountTrading.value), title: "Aplikasi Pembukaaan Rekening Transaksi"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Dokumen Pemberitahuan Adanya Resiko', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.dokumenPemberitahuanAdanyaResiko(acc: selectedAccountTrading.value), title: "Dokumen Pemberitahuan Adanya Resiko"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.dokumenPemberitahuanAdanyaResiko(acc: selectedAccountTrading.value), title: "Dokumen Pemberitahuan Adanya Resiko"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Peraturan Perdagangan (Trading Rules)', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.tradingRules(acc: selectedAccountTrading.value), title: "Trading Rules"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.tradingRules(acc: selectedAccountTrading.value), title: "Trading Rules"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Kode Akses', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.personalAccessPassword(acc: selectedAccountTrading.value), title: "Kode Akses"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.personalAccessPassword(acc: selectedAccountTrading.value), title: "Kode Akses"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Pernyataan Sumber Dana Milik Sendiri', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.pernyataanDanaNasabah(acc: selectedAccountTrading.value), title: "Pernyataan Sumber Dana Milik Sendiri"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.pernyataanDanaNasabah(acc: selectedAccountTrading.value), title: "Pernyataan Sumber Dana Milik Sendiri"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Pernytaan Penerimtaan Nasabah', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.suratPernyataanPenerimaanNasabah(acc: selectedAccountTrading.value), title: "Pernytaan Penerimtaan Nasabah"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.suratPernyataanPenerimaanNasabah(acc: selectedAccountTrading.value), title: "Pernytaan Penerimtaan Nasabah"));
                         },
                       ),
                       CheckboxListTile(
+                        activeColor: CustomColor.secondaryColor,
                         contentPadding: EdgeInsets.zero,
                         title: Text('Formulir Verifikasi Kelengkapan', style: GoogleFonts.inter(fontSize: 16.0)),
                         value: true,
                         onChanged:(bool? value) {
-                          Get.to(() => PdfViewerScreen(pdfUrl: companyController.formulirVerifikasiKelengkapan(acc: selectedAccountTrading.value), title: "Formulir Verifikasi Kelengkapan"));
+                          Get.to(() => LocalPdfViewer(pdfUrl: companyController.formulirVerifikasiKelengkapan(acc: selectedAccountTrading.value), title: "Formulir Verifikasi Kelengkapan"));
                         },
                       ),
+                      Row(
+                        children: [
+                          Obx(
+                            () => Row(
+                              children: [
+                                Checkbox(
+                                  fillColor: WidgetStatePropertyAll(Colors.white),
+                                  checkColor: CustomColor.secondaryColor,
+                                  side: WidgetStateBorderSide.resolveWith((Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.selected)) {
+                                      return const BorderSide(color: Colors.black45); // tetap tampil meski dicentang
+                                    }
+                                    return const BorderSide(color: Colors.black45); // tidak dicentang
+                                  }),
+                                  value: selectedStatement.value ? true : false,
+                                  onChanged: (value) => selectedStatement.value = !selectedStatement.value,
+                                ),
+                                Text("YA")
+                              ],
+                            ),
+                          ),
+                          Obx(
+                            () => Row(
+                              children: [
+                                Checkbox(
+                                  fillColor: WidgetStatePropertyAll(Colors.white),
+                                  checkColor: CustomColor.secondaryColor,
+                                  side: WidgetStateBorderSide.resolveWith((Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.selected)) {
+                                      return const BorderSide(color: Colors.black45); // tetap tampil meski dicentang
+                                    }
+                                    return const BorderSide(color: Colors.black45); // tidak dicentang
+                                  }),
+                                  value: selectedStatement.value == false ? true : false,
+                                  onChanged: (value) => selectedStatement.value = !selectedStatement.value,
+                                ),
+                                Text("TIDAK")
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
                     ]
                 ),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: StepUtilities.stepOnlineRegister(
-          size: size,
-          title: "Dokumen Persetujuan",
-          onPressed: (){
-            Get.to(() => const SuccessSubmit());
-          },
-          progressEnd: 4,
-          currentAllPageStatus: 3,
-          progressStart: 4
+        bottomNavigationBar: Obx(
+          () => StepUtilities.stepOnlineRegister(
+            size: size,
+            title: regolController.isLoading.value ? "Processing..." : "Dokumen Persetujuan",
+            onPressed: regolController.isLoading.value ? null : (){
+              regolController.kelengkapanDokumen(pernyataan: selectedStatement.value ? "ya" : "tidak").then((result){
+                if(!result){
+                  CustomScaffoldMessanger.showAppSnackBar(context, message: "Please check all the documents", type: SnackBarType.error);
+                  return;
+                }
+                Get.to(() => const SuccessSubmit());
+              });
+            },
+            progressEnd: 4,
+            currentAllPageStatus: 3,
+            progressStart: 4
+          ),
         ),
       ),
     );

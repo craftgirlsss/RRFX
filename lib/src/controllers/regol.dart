@@ -24,6 +24,23 @@ class RegolController extends GetxController {
     }
   }
 
+  // Create Demo Trading API
+  Future<bool> createDemoAccount() async {
+    try {
+      isLoading(true);
+      Map<String, dynamic> result = await authService.post("regol/createDemo", {});
+      responseMessage(result['message']);
+      if(result['status'] == true) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      isLoading(false);
+      responseMessage(e.toString());
+      return false;
+    }
+  }
+
   Future<bool> progressAccount() async {
     try {
       /** Fetch data from api */
@@ -281,6 +298,8 @@ class RegolController extends GetxController {
         'lama_bekerja_sebelumnya': '${lamaBekerjaSebelumnya ?? 0} tahun'
       });
 
+      print(result);
+
       isLoading(false);
       responseMessage(result['message']);
       if (result['status'] != true) {
@@ -387,6 +406,7 @@ class RegolController extends GetxController {
       });
 
       isLoading(false);
+      print(result);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;
@@ -421,6 +441,25 @@ class RegolController extends GetxController {
       }
       return true;
 
+    } catch (e) {
+      isLoading(false);
+      responseMessage(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> kelengkapanDokumen({String? pernyataan}) async {
+    try {
+      isLoading(true);
+      Map<String, dynamic> result = await authService.post("regol/kelengkapanFormulir", {
+        'aggree': pernyataan
+      });
+      isLoading(false);
+      responseMessage(result['message']);
+      if (result['status'] != true) {
+        return false;
+      }
+      return true;
     } catch (e) {
       isLoading(false);
       responseMessage(e.toString());

@@ -7,14 +7,20 @@ import 'package:rrfx/src/components/alerts/default.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
 import 'package:rrfx/src/components/colors/default.dart';
+import 'package:rrfx/src/components/containers/phone_code_selector.dart';
 import 'package:rrfx/src/components/containers/utilities.dart';
 import 'package:rrfx/src/components/languages/language_variable.dart';
 import 'package:rrfx/src/components/painters/loading_water.dart';
+import 'package:rrfx/src/components/textfields/email_textfield.dart';
 import 'package:rrfx/src/components/textfields/name_textfield.dart';
 import 'package:rrfx/src/components/textfields/number_textfield.dart';
+import 'package:rrfx/src/components/textfields/phone_textfield.dart';
 import 'package:rrfx/src/components/textfields/void_textfield.dart';
 import 'package:rrfx/src/controllers/authentication.dart';
 import 'package:rrfx/src/controllers/regol.dart';
+import 'package:rrfx/src/controllers/user_controller.dart';
+import 'package:rrfx/src/helpers/handlers/date_pickers.dart';
+import 'package:rrfx/src/helpers/variables/countries.dart';
 import 'package:rrfx/src/helpers/variables/global_variables.dart';
 import 'package:rrfx/src/views/accounts/step_18_pernyataan_simulasi.dart';
 import 'package:rrfx/src/views/mainpage.dart';
@@ -41,6 +47,7 @@ class _Step2StoredData extends State<Step2StoredData> {
 
 
   RegolController regolController = Get.find();
+  UserController userController = Get.put(UserController());
   AuthController authController = Get.find();
 
   final _formKey = GlobalKey<FormState>();
@@ -50,13 +57,23 @@ class _Step2StoredData extends State<Step2StoredData> {
   @override
   void initState() {
     super.initState();
-    emailController.text = authController.personalModel.value?.response.personalDetail.email ?? "-";
-    phoneController.text = authController.personalModel.value?.response.personalDetail.phone ?? "-";
-    nameController.text = authController.personalModel.value?.response.personalDetail.name ?? "-";
-    taxController.text = regolController.accountModel.value?.npwp ?? "-";
-    dateBirthController.text = regolController.accountModel.value?.dateOfBirth ?? "-";
-    placeBirthController.text = regolController.accountModel.value?.placeOfBirth ?? "-";
-    genderController.text = regolController.accountModel.value?.gender != null ? regolController.accountModel.value!.gender!.capitalize! : "-";
+    Future.delayed(Duration.zero, () async{
+      await userController.getProfile().then((resultGet) {
+        if (resultGet) {
+          setState(() {
+            genderController.text = userController.profileModel.value?.gender ?? "";
+            nameController.text = userController.profileModel.value?.name ?? "";
+            final phone = userController.profileModel.value?.phone ?? "";
+            final phoneWithout62 = phone.replaceFirst(RegExp(r'^62'), '');
+            phoneController.text = phoneWithout62;
+            emailController.text = userController.profileModel.value?.email ?? "";
+            placeBirthController.text = userController.profileModel.value?.tmptLahir ?? "";
+            dateBirthController.text = userController.profileModel.value?.tglLahir ?? "";
+            taxController.text = regolController.accountModel.value?.npwp ?? "";
+          });
+        }
+      });
+    });
   }
 
   @override
@@ -108,50 +125,56 @@ class _Step2StoredData extends State<Step2StoredData> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    // UtilitiesWidget.titleContent(
-                    //   title: LanguageGlobalVar.TITLE_REGOL_PAGE_2.tr,
-                    //   subtitle: LanguageGlobalVar.SUBTITLE_REGOL_PAGE_2.tr,
-                    //   children: [
-                    //     NameTextField(readOnly: true, controller: nameController, fieldName: LanguageGlobalVar.FULL_NAME.tr, hintText: LanguageGlobalVar.INPUT_YOUR_NAME.tr, labelText: LanguageGlobalVar.FULL_NAME.tr, useValidator: false),
-                    //     EmailTextField(readOnly: true, controller: emailController, fieldName: LanguageGlobalVar.EMAIL_ADDRESS.tr, hintText: LanguageGlobalVar.INPUT_YOUR_EMAIL_ADDRESS.tr, labelText: LanguageGlobalVar.EMAIL_ADDRESS.tr),
-                    //     Row(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Obx(() => CustomPhoneSelector.phoneCodeSelector(onTap: (){
-                    //           CustomMaterialBottomSheets.defaultBottomSheet(context, size: size, title: LanguageGlobalVar.CHOOSE_YOUR_PHONE_CODE.tr, children: List.generate(countryList.length, (i){
-                    //             return ListTile(
-                    //               leading: Text("+${countryList[i].phoneCode}", style: GoogleFonts.inter()),
-                    //               onTap: (){
-                    //                 Navigator.pop(context);
-                    //                 selectedPhone(countryList[i].phoneCode);
-                    //               },
-                    //               title: Text(countryList[i].name, style: GoogleFonts.inter()),
-                    //             );
-                    //           }));
-                    //         }, selectedPhone: selectedPhone.value)),
-                    //         const SizedBox(width: 5),
-                    //         Expanded(child: PhoneTextField(readOnly: true, controller: phoneController, fieldName: LanguageGlobalVar.PHONE_NUMBER.tr, hintText: "81xxxx", labelText: LanguageGlobalVar.PHONE_NUMBER.tr)),
-                    //       ],
-                    //     ),
-                    //   ]
-                    // ),
+                    UtilitiesWidget.titleContent(
+                      title: LanguageGlobalVar.TITLE_REGOL_PAGE_2.tr,
+                      subtitle: LanguageGlobalVar.SUBTITLE_REGOL_PAGE_2.tr,
+                      children: [
+                        NameTextField(readOnly: true, controller: nameController, fieldName: LanguageGlobalVar.FULL_NAME.tr, hintText: LanguageGlobalVar.INPUT_YOUR_NAME.tr, labelText: LanguageGlobalVar.FULL_NAME.tr, useValidator: false),
+                        EmailTextField(readOnly: true, controller: emailController, fieldName: LanguageGlobalVar.EMAIL_ADDRESS.tr, hintText: LanguageGlobalVar.INPUT_YOUR_EMAIL_ADDRESS.tr, labelText: LanguageGlobalVar.EMAIL_ADDRESS.tr),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Obx(() => CustomPhoneSelector.phoneCodeSelector(onTap: (){
+                              CustomMaterialBottomSheets.defaultBottomSheet(context, size: size, title: LanguageGlobalVar.CHOOSE_YOUR_PHONE_CODE.tr, children: List.generate(countryList.length, (i){
+                                return ListTile(
+                                  leading: Text("+${countryList[i].phoneCode}", style: GoogleFonts.inter()),
+                                  onTap: (){
+                                    Navigator.pop(context);
+                                    selectedPhone(countryList[i].phoneCode);
+                                  },
+                                  title: Text(countryList[i].name, style: GoogleFonts.inter()),
+                                );
+                              }));
+                            }, selectedPhone: selectedPhone.value)),
+                            const SizedBox(width: 5),
+                            Expanded(child: PhoneTextField(readOnly: true, controller: phoneController, fieldName: LanguageGlobalVar.PHONE_NUMBER.tr, hintText: "81xxxx", labelText: LanguageGlobalVar.PHONE_NUMBER.tr, useValidator: false,)),
+                          ],
+                        ),
+                      ]
+                    ),
                     UtilitiesWidget.titleContent(
                       title: LanguageGlobalVar.TITLE_REGOL_PAGE_2_2.tr,
                       subtitle: LanguageGlobalVar.SUBTITLE_REGOL_PAGE_2_2.tr,
                       children: [
-                        NumberTextField(controller: taxController, fieldName: LanguageGlobalVar.TAX_CARD.tr, hintText: LanguageGlobalVar.TAX_CARD.tr, labelText: LanguageGlobalVar.TAX_CARD.tr, maxLength: 14),
+                        NumberTextField(controller: taxController, fieldName: LanguageGlobalVar.TAX_CARD.tr, hintText: LanguageGlobalVar.TAX_CARD.tr, labelText: LanguageGlobalVar.TAX_CARD.tr, maxLength: 16, useValidator: false),
                         VoidTextField(controller: dateBirthController, fieldName: LanguageGlobalVar.BIRTH_DATE.tr, hintText: LanguageGlobalVar.BIRTH_DATE.tr, labelText: LanguageGlobalVar.BIRTH_DATE.tr, onPressed: () async {
-                          final DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1960),
-                            lastDate: DateTime.now(),
-                          );
-                          selectedDateBirth = pickedDate;
-                          dateBirthController.text = DateFormat('dd MMMM yyyy').format(pickedDate ?? DateTime.now());
+                          DateTime? selected;
+                            selected = await CustomDatePicker.material(context);
+                            if(selected != null){
+                              dateBirthController.text = CustomDatePicker.formatIndonesiaDate(selected);
+                              selectedDateBirth = selected;
+                            }
+                          // final DateTime? pickedDate = await showDatePicker(
+                          //   context: context,
+                          //   initialDate: DateTime.now(),
+                          //   firstDate: DateTime(1960),
+                          //   lastDate: DateTime.now(),
+                          // );
+                          // selectedDateBirth = pickedDate;
+                          // dateBirthController.text = DateFormat('dd MMMM yyyy').format(pickedDate ?? DateTime.now());
                         }),
-                        NameTextField(controller: placeBirthController, fieldName: LanguageGlobalVar.BIRTH_PLACE.tr, hintText: LanguageGlobalVar.BIRTH_PLACE.tr, labelText: LanguageGlobalVar.BIRTH_PLACE.tr),
+                        NameTextField(controller: placeBirthController, fieldName: LanguageGlobalVar.BIRTH_PLACE.tr, hintText: LanguageGlobalVar.BIRTH_PLACE.tr, labelText: LanguageGlobalVar.BIRTH_PLACE.tr, useValidator: false),
                         VoidTextField(controller: genderController, fieldName: LanguageGlobalVar.GENDER.tr, hintText: LanguageGlobalVar.GENDER.tr, labelText: LanguageGlobalVar.GENDER.tr, onPressed: (){
                           CustomMaterialBottomSheets.defaultBottomSheet(context, size: size, isScrolledController: false, title: LanguageGlobalVar.CHOOSE_YOUR_GENDER.tr, children: List.generate(GlobalVariable.genderIndo.length, (i){
                             return ListTile(

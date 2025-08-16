@@ -51,21 +51,20 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, (){
-      userController.getProfile().then((resultGet){
-        print(resultGet);
-        if(resultGet){
+    Future.delayed(Duration.zero, () async {
+      await userController.getProfile().then((resultGet) {
+        if (resultGet) {
           setState(() {
-            jenisKelamin.text = homeController.profileModel.value?.gender ?? "-";
-            nameController.text = homeController.profileModel.value?.name ?? "";
-            phoneController.text = homeController.profileModel.value?.phone ?? "";
-            emailController.text = homeController.profileModel.value?.email ?? "";
-            addressController.text = homeController.profileModel.value?.address ?? "";
-            countryController.text = homeController.profileModel.value?.country ?? "";
-            zipController.text = homeController.profileModel.value?.zip ?? "";
-            tanggalLahir.text = homeController.profileModel.value?.tglLahir ?? "";
-            tempatLahir.text = homeController.profileModel.value?.tmptLahir ?? "";
-            addressController.text = homeController.profileModel.value?.address ?? "";
+            jenisKelamin.text = userController.profileModel.value?.gender ?? "-";
+            nameController.text = userController.profileModel.value?.name ?? "";
+            phoneController.text = userController.profileModel.value?.phone ?? "";
+            emailController.text = userController.profileModel.value?.email ?? "";
+            addressController.text = userController.profileModel.value?.address ?? "";
+            countryController.text = userController.profileModel.value?.country ?? "";
+            zipController.text = userController.profileModel.value?.zip ?? "";
+            tanggalLahir.text = userController.profileModel.value?.tglLahir ?? "";
+            tempatLahir.text = userController.profileModel.value?.tmptLahir ?? "";
+            addressController.text = userController.profileModel.value?.address ?? "";
           });
         }
       });
@@ -153,7 +152,6 @@ class _EditProfileState extends State<EditProfile> {
           () => RefreshIndicator(
             onRefresh: isLoading.value ? ()async{} : () async {
               await userController.getProfile().then((resultGet){
-                print(resultGet);
                 if(resultGet){
                   jenisKelamin.text = userController.profileModel.value?.gender ?? "-";
                   nameController.text = userController.profileModel.value?.name ?? "";

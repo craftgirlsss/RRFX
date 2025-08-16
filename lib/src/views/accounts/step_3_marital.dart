@@ -67,6 +67,7 @@ class _Step3Marital extends State<Step3Marital> {
 
   @override
   Widget build(BuildContext context) {
+    print(motherNameController.text);
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [

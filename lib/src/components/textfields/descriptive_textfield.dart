@@ -46,7 +46,7 @@ class _DescriptiveTextFieldState extends State<DescriptiveTextField> {
           keyboardAppearance: Brightness.dark,
           keyboardType: TextInputType.name,
           style: GoogleFonts.inter(),
-          cursorColor: CustomColor.defaultColor,
+          cursorColor: CustomColor.secondaryColor,
           validator: (value) {
             if(widget.useValidator == true){
               if (value == null || value.isEmpty) {
@@ -73,14 +73,14 @@ class _DescriptiveTextFieldState extends State<DescriptiveTextField> {
               duration: const Duration(milliseconds: 500),
               padding: const EdgeInsets.all(2),
               decoration:  BoxDecoration(
-                  color: isName.value == false ? Colors.red : CustomColor.defaultColor,
+                  color: isName.value == false ? Colors.red : CustomColor.secondaryColor,
                   shape: BoxShape.circle),
               child: isName.value == false ? const Icon(Icons.close, color: Colors.white, size: 16) : const Icon(Icons.done, color: Colors.white, size: 16),
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
                 borderSide: BorderSide(
-                    color: CustomColor.defaultColor
+                    color: CustomColor.secondaryColor
                 )
             ),
             enabledBorder: OutlineInputBorder(

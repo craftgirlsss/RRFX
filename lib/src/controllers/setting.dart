@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:rrfx/src/models/settings/admin_bank_model.dart';
 import 'package:rrfx/src/models/settings/user_bank_model.dart';
+import 'package:rrfx/src/models/utilities/list_bank_user.dart';
 import 'package:rrfx/src/service/auth_service.dart';
 
 class SettingController extends GetxController{
@@ -8,6 +9,7 @@ class SettingController extends GetxController{
   AuthService authService = AuthService();
   RxString responseMessage = "".obs;
   Rxn<UserBankModel> userBankModel = Rxn<UserBankModel>();
+  Rxn<ListBankUserV2> userBankModelV2 = Rxn<ListBankUserV2>();
   Rxn<BankAdminModel> adminBankModel = Rxn<BankAdminModel>();
 
 
@@ -16,7 +18,6 @@ class SettingController extends GetxController{
     try {
       isLoading(true);
       Map<String, dynamic> result = await authService.get("profile/user-bank");
-
       isLoading(false);
       responseMessage(result['message']);
       if (result['status'] != true) {
@@ -31,6 +32,27 @@ class SettingController extends GetxController{
     }
   }
 
+  Future<bool> getUserBankV2() async {
+    try {
+      isLoading(true);
+      Map<String, dynamic> result = await authService.get("/bank/list");
+
+      isLoading(false);
+      responseMessage(result['message']);
+      if (result['status'] != true) {
+        return false;
+      }
+      userBankModelV2(ListBankUserV2.fromJson(result));
+      return true;
+    } catch (e) {
+      isLoading(false);
+      responseMessage(e.toString());
+      return false;
+    }
+  }
+
+
+
   // Pernataan Pailit
   Future<bool> editBank(
     {
@@ -38,7 +60,6 @@ class SettingController extends GetxController{
       String? currencyType,
       String? bankName,
       String? owner,
-      String? city,
       String? branch,
       String? type,
       String? number
@@ -55,6 +76,7 @@ class SettingController extends GetxController{
         'type': type,
         'account': number
       });
+      print(result);
 
       isLoading(false);
       responseMessage(result['message']);

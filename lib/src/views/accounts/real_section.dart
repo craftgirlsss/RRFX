@@ -115,7 +115,6 @@ class _RealSectionState extends State<RealSection> {
                                     accountActive[i]['active']!.value = !accountActive[i]['active']!.value;
                                     if(value){
                                       tradingController.connectTradingAccount(accountId: tradingController.tradingAccountModels.value!.response.real![i].id!).then((result){
-                                        print(result['status']);
                                         Get.back();
                                         if(!result['status'] && result['message'] == "Invalid Account, please update your account password"){
                                           CustomScaffoldMessanger.showAppSnackBar(context, message: result['message'], type: SnackBarType.success);

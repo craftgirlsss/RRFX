@@ -50,7 +50,7 @@ class _PendingAccountState extends State<PendingAccount> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(HeroIcons.trash),
+                  Icon(HeroIcons.trash, color: CustomColor.secondaryColor),
                   SizedBox(height: 5),
                   Text("Tidak ada akun pending", style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w700))
                 ],

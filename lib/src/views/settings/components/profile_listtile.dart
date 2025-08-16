@@ -17,7 +17,15 @@ Widget profileListTile({String? name, String? email, String? urlPhoto, Function(
                 tag: 'profileImage',
                 child: CircleAvatar(
                   radius: 40,
-                  backgroundImage: changedImage == true ? FileImage(File(urlPhoto!)) : imageOnline == true ? NetworkImage(urlPhoto!) : AssetImage('assets/images/ic_launcher.png'),
+                  backgroundImage: changedImage == true
+                    ? FileImage(File(urlPhoto!))
+                    : (imageOnline == true && urlPhoto != null && urlPhoto.isNotEmpty)
+                        ? NetworkImage(urlPhoto)
+                        : const AssetImage('assets/images/logo-rrfx.png')
+                            as ImageProvider,
+                  onBackgroundImageError: (error, stackTrace) {
+                    debugPrint("Image load failed: $error");
+                  },
                 ),
               ),
             ),

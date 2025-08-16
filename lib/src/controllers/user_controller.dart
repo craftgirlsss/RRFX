@@ -43,14 +43,6 @@ class UserController extends GetxController {
     String? zipcode
   }) async {
     isLoading(true);
-    print(fullname);
-    print(gender);
-    print(dateOfBirth);
-    print(placeOfBirth);
-    print(address);
-    print(zipcode);
-    print(country);
-
     try {
       Map<String, dynamic> response = await authService.post("/profile/updateInfo",
         {
@@ -126,6 +118,31 @@ class UserController extends GetxController {
       Map<String, dynamic> result = await authService.get("transaction/historyDetail?id=$id");
       isLoading(false);
       transactionDetail(TransactionDetailModel.fromJson(result['response']));
+      responseMessage(result['message']);
+      if (result['status'] != true) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      isLoading(false);
+      responseMessage(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> addBank({String? currency, String? bankName, String? bankBranch, String? bankHolder, String? type, String? account}) async {
+    try {
+      isLoading(true);
+      Map<String, dynamic> result = await authService.post("bank/create", {
+        'currency': currency,
+        'bank_name': bankName,
+        'bank_branch': bankBranch,
+        'bank_holder': bankHolder,
+        'type': type,
+        'account': account
+      });
+      print(result);
+      isLoading(false);
       responseMessage(result['message']);
       if (result['status'] != true) {
         return false;

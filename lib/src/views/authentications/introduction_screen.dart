@@ -18,38 +18,16 @@ class IntroductionScreen extends StatefulWidget {
 
 class _IntroductionScreenState extends State<IntroductionScreen> {
   GoogleSignInController googleController = Get.put(GoogleSignInController());
-  // int _currentImageIndex = 0;
   double opacity = 1.0;
-  // late Timer _timer;
-
-  // final List<String> _images = [
-  //   'assets/images/1.jpg',
-  //   'assets/images/2.jpg',
-  //   'assets/images/3.jpg',
-  // ];
 
   @override
   void initState() {
     super.initState();
-    // _startImageFadeAnimation();
     FirebaseAPI.getToken();
-    PermissionHandlers.requestPermissions();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await PermissionHandlers.requestPermissions();
+    });
   }
-
-  // void _startImageFadeAnimation() {
-  //   _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
-  //     setState(() {
-  //       opacity = 0.0;
-  //     });
-
-  //     Future.delayed(const Duration(milliseconds: 500), () {
-  //       setState(() {
-  //         _currentImageIndex = (_currentImageIndex + 1) % _images.length;
-  //         opacity = 1.0;
-  //       });
-  //     });
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -63,18 +41,6 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // SizedBox(
-          //   width: double.infinity,
-          //   height: double.infinity,
-          //   child: AnimatedOpacity(
-          //     duration: const Duration(milliseconds: 600),
-          //     opacity: _opacity,
-          //     child: Image.asset(
-          //       _images[_currentImageIndex],
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
           BackgroundColor.defaultBackground(),
           SafeArea(
             child: Padding(
@@ -107,27 +73,6 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      /*
-                      Text("Atau"),
-                      CustomButtons.buildGoogleLoginButton(
-                        text: "Masuk dengan Google",
-                        onPressed: () async {
-                          try {
-                            final userCredential = await googleController.signInWithGoogle();
-                            if (userCredential.user != null) {
-                              print("Berhasil login dengan nama akun ${userCredential.user?.email}");
-                              Get.offAll(() => const SelectUsersType());
-                              // Navigator.pushReplacementNamed(context, '/home'); // ganti dengan route kamu
-                            }
-                          } catch (e) {
-                            debugPrint('Login gagal: $e');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Login gagal. Silakan coba lagi.")),
-                            );
-                          }
-                        }
-                      ),
-                      */
                       const SizedBox(height: 20.0),
                       UtilitiesComponents.privacyPolicy(context),
                       const SizedBox(height: 9.0),

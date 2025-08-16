@@ -41,7 +41,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
           autovalidateMode: AutovalidateMode.onUnfocus,
           autofillHints: const [AutofillHints.telephoneNumber],
           keyboardType: TextInputType.phone,
-          cursorColor: CustomColor.defaultColor,
+          cursorColor: CustomColor.secondaryColor,
           validator: (value) {
             if(widget.useValidator == true){
               if (value == null || value.isEmpty) {
@@ -67,14 +67,14 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
               duration: const Duration(milliseconds: 500),
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: isPhone.value == false ? Colors.red : CustomColor.defaultColor,
+                color: isPhone.value == false ? Colors.red : CustomColor.secondaryColor,
                 shape: BoxShape.circle),
               child: isPhone.value == false ? const Icon(Icons.close, color: Colors.white, size: 16) : const Icon(Icons.done, color: Colors.white, size: 16),
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
                 borderSide: BorderSide(
-                    color: CustomColor.defaultColor
+                    color: CustomColor.secondaryColor
                 )
             ),
             enabledBorder: OutlineInputBorder(

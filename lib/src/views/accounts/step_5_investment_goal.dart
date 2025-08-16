@@ -99,9 +99,12 @@ class _Step5InvestmentGoal extends State<Step5InvestmentGoal> {
                       enableFeedback: true,
                       toggleable: false,
                       selected: false,
-                      selectedTileColor: CustomColor.defaultColor,
+                      activeColor: CustomColor.secondaryColor,
+                      hoverColor: CustomColor.secondaryColor.withOpacity(0.2),
+                      overlayColor: WidgetStatePropertyAll(CustomColor.secondaryColor.withOpacity(0.2)),
+                      selectedTileColor: CustomColor.secondaryColor,
                       shape: StadiumBorder(
-                        side: BorderSide(color: CustomColor.defaultColor)
+                        side: BorderSide(color: CustomColor.secondaryColor)
                       ),
                       title: Text(GlobalVariable.investmentGoalIndonesia[index]),
                       value: index + 1,

@@ -32,7 +32,7 @@ class _VoidTextFieldState extends State<VoidTextField> {
         onTap: widget.onPressed,
         controller: widget.controller,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        cursorColor: CustomColor.defaultColor,
+        cursorColor: CustomColor.secondaryColor,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Mohon isikan ${widget.fieldName}';
@@ -54,7 +54,7 @@ class _VoidTextFieldState extends State<VoidTextField> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
             borderSide: BorderSide(
-              color: CustomColor.defaultColor
+              color: CustomColor.secondaryColor
             )
           ),
           enabledBorder: OutlineInputBorder(

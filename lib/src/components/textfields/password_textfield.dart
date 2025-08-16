@@ -41,7 +41,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           readOnly: widget.readOnly ?? false,
           controller: widget.controller,
           obscureText: show.value,
-          cursorColor: CustomColor.defaultColor,
+          cursorColor: CustomColor.secondaryColor,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           autofillHints: const [AutofillHints.password],
           keyboardAppearance: Brightness.dark,
@@ -67,7 +67,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
               fontSize: 14
             ),
             labelText: widget.labelText,
-            labelStyle: const TextStyle(color: CustomColor.defaultColor),
+            labelStyle: const TextStyle(color: CustomColor.secondaryColor),
             filled: false,
             suffixIcon: CupertinoButton(
               onPressed: (){
@@ -78,7 +78,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               borderSide: BorderSide(
-                color: CustomColor.defaultColor
+                color: CustomColor.secondaryColor
               )
             ),
             enabledBorder: OutlineInputBorder(

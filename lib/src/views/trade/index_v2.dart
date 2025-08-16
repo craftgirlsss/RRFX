@@ -136,7 +136,7 @@ class _MetaQuotesPageState extends State<MetaQuotesPage> {
         Obx(
         () => SliverList(
             delegate: SliverChildListDelegate(
-                  () {
+              () {
                 if (controller.status.value == WebSocketStatus.connecting) {
                   return [
                     SizedBox(

@@ -125,7 +125,7 @@ class _Step1UploadPhotoState extends State<Step1UploadPhoto> {
                         },
                           controller: idTypeController, fieldName: LanguageGlobalVar.ID_TYPE.tr, hintText: LanguageGlobalVar.ID_TYPE.tr, labelText: LanguageGlobalVar.ID_TYPE.tr
                         ),
-                        NumberTextField(controller: idTypeNumber, fieldName: LanguageGlobalVar.ID_TYPE_NUMBER.tr, hintText: LanguageGlobalVar.ID_TYPE_NUMBER.tr, labelText: LanguageGlobalVar.ID_TYPE_NUMBER.tr, maxLength: 14),
+                        NumberTextField(controller: idTypeNumber, fieldName: LanguageGlobalVar.ID_TYPE_NUMBER.tr, hintText: LanguageGlobalVar.ID_TYPE_NUMBER.tr, labelText: LanguageGlobalVar.ID_TYPE_NUMBER.tr, maxLength: 16),
                         Obx(
                           () => isLoading.value ? const SizedBox() : UtilitiesWidget.uploadPhotoV2(isImageOnline: imageLoaded.value, title: "Foto KTP", onPressed: () async {
                             idPhoto.value = await CustomImagePicker.pickImageFromCameraAndReturnUrl();

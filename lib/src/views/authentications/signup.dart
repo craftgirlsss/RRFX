@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -156,16 +155,16 @@ class _SignupState extends State<Signup> {
                                           message: LanguageGlobalVar.ERROR_PHONE_NULL.tr
                                         );
                                       }else{
-                                        if(kDebugMode){
+                                       //if(kDebugMode){
                                           authController.sendOTPWA(phone: number.value, phoneCode: phoneCode.value).then((result){
                                             CustomAlert.showMySnackBar(authController.responseMessage.value);
                                           });
-                                        }else{
-                                          authController.sendOTPSMS(phone: number.value, phoneCode: phoneCode.value).then((result){
-                                            CustomAlert.showMySnackBar(authController.responseMessage.value);
-                                          });
+                                        // }else{
+                                        //   authController.sendOTPSMS(phone: number.value, phoneCode: phoneCode.value).then((result){
+                                        //     CustomAlert.showMySnackBar(authController.responseMessage.value);
+                                        //   });
                                         }
-                                      }
+                                      //}
                                     },
                                     title: authController.isLoadingOTP.value ? "Sending OTP..." : LanguageGlobalVar.SEND_OTP.tr
                                   ),

@@ -56,7 +56,7 @@ class _Step4EmergencyContact extends State<Step4EmergencyContact> {
     relationController.text = regolController.accountModel.value?.drrtStatus ?? "";
     phoneController.text = regolController.accountModel.value?.drrtPhone ?? "";
     addressController.text = regolController.accountModel.value?.drrtAddress ?? "";
-    zipController.text = regolController.accountModel.value?.drrtPostalCode ?? "-";
+    zipController.text = regolController.accountModel.value?.drrtPostalCode ?? "";
   }
 
   @override
@@ -145,7 +145,7 @@ class _Step4EmergencyContact extends State<Step4EmergencyContact> {
                       //     }));
                       //   }),
                       // ),
-                      NumberTextField(controller: zipController, fieldName: "Zip Code", hintText: "Input Zip Code", labelText: "Zip Code", maxLength: 4),
+                      NumberTextField(controller: zipController, fieldName: "Zip Code", hintText: "Input Zip Code", labelText: "Zip Code", maxLength: 5),
                     ]
                 ),
               ],

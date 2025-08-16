@@ -449,6 +449,22 @@ class UtilitiesController extends GetxController {
   }
 
   // Desa API
+  Future getBankList() async {
+    try {
+      Map<String, dynamic> result = await authService.get("bank/banklist");
+      responseMessage(result['message']);
+      if (result['status'] != true) {
+        responseMessage("Daftar Bank Tidak Ditemukan");
+        return null;
+      }
+      return result['response'];
+    } catch (e) {
+      responseMessage(e.toString());
+      return false;
+    }
+  }
+
+  // Desa API
   Future<bool> getNewsDetail({String? newsID}) async {
     try {
       Map<String, dynamic> result = await authService.post("public/news-detail", {
@@ -516,4 +532,6 @@ class UtilitiesController extends GetxController {
       return false;
     }
   }
+
+  
 }

@@ -12,6 +12,7 @@ class NumberTextField extends StatefulWidget {
   final bool? readOnly;
   final String? fieldName;
   final int? maxLength;
+  final int? minLength;
   final String? preffix;
   final TextEditingController? controller;
   final bool? useValidator;
@@ -24,6 +25,7 @@ class NumberTextField extends StatefulWidget {
     super.key,
     this.hintText,
     this.labelText,
+    this.minLength,
     this.controller,
     this.readOnly,
     this.onSubmitted,
@@ -81,7 +83,8 @@ class _NumberTextFieldState extends State<NumberTextField> {
             controller: widget.controller,
             autovalidateMode: AutovalidateMode.onUnfocus,
             keyboardType: TextInputType.number,
-            cursorColor: CustomColor.defaultColor,
+            maxLength: widget.maxLength ?? 100,
+            cursorColor: CustomColor.secondaryColor,
             validator: (value) {
               if (widget.useValidator == true) {
                 if (value == null || value.isEmpty) {
@@ -114,7 +117,7 @@ class _NumberTextFieldState extends State<NumberTextField> {
                   decoration: BoxDecoration(
                     color: isNumber.value == false
                       ? Colors.red
-                      : CustomColor.defaultColor,
+                      : CustomColor.secondaryColor,
                     shape: BoxShape.circle),
                   child: isNumber.value == false
                     ? const Icon(Icons.close,
@@ -124,7 +127,7 @@ class _NumberTextFieldState extends State<NumberTextField> {
                   ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
-                borderSide: BorderSide(color: CustomColor.defaultColor)),
+                borderSide: BorderSide(color: CustomColor.secondaryColor)),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
                 borderSide: BorderSide(color: CustomColor.textThemeDarkSoftColor)),

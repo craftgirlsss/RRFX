@@ -32,7 +32,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
           autofillHints: const [AutofillHints.oneTimeCode],
           keyboardAppearance: Brightness.dark,
           keyboardType: TextInputType.number,
-          cursorColor: CustomColor.defaultColor,
+          cursorColor: CustomColor.secondaryColor,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Mohon isikan ${widget.fieldName}';
@@ -49,12 +49,12 @@ class _OTPTextFieldState extends State<OTPTextField> {
               fontSize: 14
             ),
             labelText: widget.labelText,
-            labelStyle: const TextStyle(color: CustomColor.defaultColor),
+            labelStyle: const TextStyle(color: CustomColor.secondaryColor),
             filled: false,
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
                 borderSide: BorderSide(
-                    color: CustomColor.defaultColor
+                    color: CustomColor.secondaryColor
                 )
             ),
             enabledBorder: OutlineInputBorder(

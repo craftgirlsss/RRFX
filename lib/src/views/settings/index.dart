@@ -46,8 +46,10 @@ class _SettingsState extends State<Settings> {
     super.initState();
     Future.delayed(Duration.zero, (){
       tradingController.getTradingAccount().then((result){
-        if(tradingController.tradingAccountModels.value?.response.real?.length != 0){
+        if(tradingController.tradingAccountModels.value?.response.real?.isNotEmpty == true){
           haveRealAccount(true);
+        }else{
+          haveRealAccount(false);
         }
       });
     });
@@ -239,9 +241,15 @@ class _SettingsState extends State<Settings> {
               ],
             ),
             SizedBox(height: 12),
-            SettingComponents.listTileItem("Riwayat Deposit Withdrawal", "Semua riwayat deposit akun trading anda", AntDesign.transaction_outline, onTap: (){
-              Get.to(() => const DepositWithdrawalHistory());
-            }),
+            Obx(
+              () => SettingComponents.listTileItem(
+                "Riwayat Deposit Withdrawal", 
+                "Semua riwayat deposit akun trading anda", 
+                AntDesign.transaction_outline, 
+                onTap: haveRealAccount.value ? () => Get.to(() => const DepositWithdrawalHistory()) : () {
+                  CustomScaffoldMessanger.showAppSnackBar(context, message: "Anda belum memiliki akun real", type: SnackBarType.error);
+                }),
+            ),
             SettingComponents.listTileItem("Tickets", "Help your problem", LineAwesome.headset_solid, onTap: () async {
               // SharedPreferences prefs = await SharedPreferences.getInstance();
               // prefs.getString('accessToken');
