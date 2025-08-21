@@ -5,6 +5,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/controllers/home.dart';
+import 'package:rrfx/src/views/accounts/deposit_new_account.dart';
 
 import 'create_real.dart';
 
@@ -70,7 +71,8 @@ class _PendingAccountState extends State<PendingAccount> {
                       break;
                     case "Deposit New Account": // Sesudah di acc WPB, menunggu nasabah deposit
                       break;
-                    case "Waiting Deposit": // Deposit nasabah dalam proses verifikasi oleh admin
+                    case "Waiting": // Deposit nasabah dalam proses verifikasi oleh admin
+                      Get.to(() => const DepositNewAccount());
                       break;
                     case "Good Fund": // Pemberian password dan username meta melalui email
                       break;

@@ -219,6 +219,7 @@ class _AccountsState extends State<Accounts> {
         child: Center(
           child: Column(
             children: [
+              const SizedBox(height: 80.0),
               Icon(LineAwesome.trash_alt, color: CustomColor.secondaryColor, size: 40,),
               const SizedBox(height: 10.0),
               Text("Tidak ada akun demo"),

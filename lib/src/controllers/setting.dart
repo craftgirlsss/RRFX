@@ -144,6 +144,39 @@ class SettingController extends GetxController{
     }
   }
 
+
+   // Pernataan Pailit
+  Future<bool> depositNewAccount({
+    String? bankAdminID,
+    String? bankUserID,
+    String? amount,
+    String? imageURL
+  }) async {
+      try {
+        isLoading(true);
+        Map<String, String> body = {
+          'dpnewacc_bankusr': bankUserID!,
+          'dpnewacc_bankcmpy': bankAdminID!,
+          'dpnewacc_dpstval': amount!,
+        };
+        Map<String, String> file = {
+          'dpnewacc_tfprove': imageURL!
+        };
+        Map<String, dynamic> result = await authService.multipart("regol/depositNewAccount", body, file);
+        isLoading(false);
+        print(result);
+        responseMessage(result['message']);
+        if (result['status'] != true) {
+          return false;
+        }
+        return true;
+      } catch (e) {
+        isLoading(false);
+        responseMessage(e.toString());
+        return false;
+      }
+    }
+
   // Pernataan Pailit
   Future<bool> withdrawal({
     String? bankUserID,

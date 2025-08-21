@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:rrfx/src/components/languages/language_variable.dart';
 
 class GlobalVariable {
-  static final mainURL = "https://api-tridentprofutures.techcrm.net";
-  // static final mainURL = "https://api-rrfx.techcrm.net";
+  // static final mainURL = "https://api-tridentprofutures.techcrm.net";
+  static final mainURL = "https://api-rrfx.techcrm.net";
   static final x_api_key = "fewAHdSkx28301294cKSnczdAs";
   static final namaPerusahaan = "PT. TridentPRO Berjangka Futures";
   static final List<String> gender = [LanguageGlobalVar.MEN.tr, LanguageGlobalVar.FEMALE.tr];

@@ -70,6 +70,19 @@ class _IndexV2State extends State<IndexV2> {
     },
   ].obs;
 
+  void startTradingSignalTimer() {
+    final now = DateTime.now();
+
+    // hanya jalan kalau weekday 1–5 (Senin–Jumat)
+    if (now.weekday >= 1 && now.weekday <= 5) {
+      _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+        _runTradingSignal();
+      });
+    } else {
+      debugPrint("Hari ini weekend, timer tidak dijalankan");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -91,9 +104,7 @@ class _IndexV2State extends State<IndexV2> {
           haveDemoAccount(false);
         }
       }
-      _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-        _runTradingSignal();
-      });
+      startTradingSignalTimer();
     });
   }
 
