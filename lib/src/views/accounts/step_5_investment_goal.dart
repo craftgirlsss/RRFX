@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rrfx/src/components/alerts/default.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
+import 'package:rrfx/src/components/containers/utilities.dart';
 import 'package:rrfx/src/components/languages/language_variable.dart';
+import 'package:rrfx/src/components/textfields/name_textfield.dart';
 import 'package:rrfx/src/controllers/regol.dart';
 import 'package:rrfx/src/helpers/variables/global_variables.dart';
 import 'package:rrfx/src/views/accounts/step_19_familly_bappebti.dart';
@@ -23,6 +25,7 @@ class Step5InvestmentGoal extends StatefulWidget {
 class _Step5InvestmentGoal extends State<Step5InvestmentGoal> {
 
   RegolController regolController = Get.find();
+  TextEditingController investmentGoalController = TextEditingController();
   RxInt selectedValue = 1.obs;
   RxString selectedName = "".obs;
 
@@ -117,6 +120,16 @@ class _Step5InvestmentGoal extends State<Step5InvestmentGoal> {
                   ),
                 );
               },),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Obx(() => selectedValue.value == 4 ? UtilitiesWidget.titleContent(
+                  title: "Other Information",
+                  subtitle: "Please fill all your family information details",
+                  children: [
+                    NameTextField(controller: investmentGoalController, fieldName: "Inputkan Tujuan Investasi", hintText: "Inputkan Tujuan Investasi", labelText: "Inputkan Tujuan Investasi"),
+                  ]
+                ) : Container()),
+              )
             ],
           ),
         ),
@@ -125,13 +138,20 @@ class _Step5InvestmentGoal extends State<Step5InvestmentGoal> {
             size: size,
             title: regolController.isLoading.value ? "Uploading..." : "Investment Goal",
             onPressed: regolController.isLoading.value ? null : (){
-              regolController.postStepFive(investmentGoal: selectedName.value).then((result){
-                if(result){
-                  Get.to(() => Step19FamilyBappebti());
-                }else{
-                  CustomAlert.alertError(message: regolController.responseMessage.value);
+              if(selectedValue.value == 4){
+                if(investmentGoalController.text.isEmpty){
+                  CustomAlert.alertError(message: "Please fill the investment goal field");
+                  return;
                 }
-              });
+              }else{
+                regolController.postStepFive(investmentGoal: selectedName.value).then((result){
+                  if(result){
+                    Get.to(() => Step19FamilyBappebti());
+                  }else{
+                    CustomAlert.alertError(message: regolController.responseMessage.value);
+                  }
+                });
+              }
             },
             progressEnd: 4,
             currentAllPageStatus: 2,

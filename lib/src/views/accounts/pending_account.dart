@@ -1,8 +1,10 @@
+import 'package:bounce/bounce.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
+import 'package:rrfx/src/components/alerts/scaffold_messanger_alert.dart';
 import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/controllers/home.dart';
 import 'package:rrfx/src/views/accounts/deposit_new_account.dart';
@@ -44,7 +46,7 @@ class _PendingAccountState extends State<PendingAccount> {
               ],
             ),
           )
-        : homeController.pendingModel.value?.response?.length == 0
+        : homeController.pendingModel.value?.response?.isEmpty == true
           ? SizedBox(
               width: double.infinity,
               height: double.infinity,
@@ -61,18 +63,20 @@ class _PendingAccountState extends State<PendingAccount> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
             itemCount: homeController.pendingModel.value?.response?.length,
             itemBuilder: (context, index) {
-              return GestureDetector(
+              return Bounce(
                 onTap: (){
                   switch(homeController.pendingModel.value?.response?[index].status){
                     case "Regol belum selesai": // Regol belum diselesaikan
                       Get.to(() => const CreateReal());
                       break;
                     case "Register": // Sudah regol, menunggu admin accepting
+                      CustomScaffoldMessanger.showAppSnackBar(context, message: "Akun Anda sedang menunggu konfirmasi dari admin.");
                       break;
                     case "Deposit New Account": // Sesudah di acc WPB, menunggu nasabah deposit
-                      break;
-                    case "Waiting": // Deposit nasabah dalam proses verifikasi oleh admin
                       Get.to(() => const DepositNewAccount());
+                      break;
+                    case "Waiting Deposit": // Deposit nasabah dalam proses verifikasi oleh admin
+                      CustomScaffoldMessanger.showAppSnackBar(context, message: "Akun Anda sedang menunggu konfirmasi dari admin.");
                       break;
                     case "Good Fund": // Pemberian password dan username meta melalui email
                       break;

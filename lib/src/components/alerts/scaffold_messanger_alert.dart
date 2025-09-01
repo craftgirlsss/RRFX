@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rrfx/src/components/colors/default.dart';
 
 // Enum untuk tipe SnackBar, memudahkan kustomisasi
 enum SnackBarType {
@@ -28,7 +29,7 @@ class CustomScaffoldMessanger {
         backgroundColor = Colors.red;
         break;
       case SnackBarType.info:
-        backgroundColor = Colors.blue;
+        backgroundColor = CustomColor.secondaryColor;
         break;
       case SnackBarType.warning:
         backgroundColor = Colors.orange;

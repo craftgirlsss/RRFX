@@ -1,19 +1,17 @@
 import 'package:get/get.dart';
 import 'package:rrfx/src/views/authentications/forgot.dart';
-import 'package:rrfx/src/views/authentications/onboarding.dart';
-import 'package:rrfx/src/views/authentications/passcode.dart';
+import 'package:rrfx/src/views/authentications/introduction_screen.dart';
 import 'package:rrfx/src/views/authentications/signin.dart';
 import 'package:rrfx/src/views/authentications/signup.dart';
 import 'package:rrfx/src/views/mainpage.dart';
 
 class GetUtilities {
   static final routes = [
-    GetPage(name: '/', page: () => const Onboarding()),
+    GetPage(name: '/', page: () => const IntroductionScreen()),
     GetPage(name: '/login', page: () => const SignIn()),
     GetPage(name: '/login/signup', page: () => const Signup()),
     GetPage(name: '/login/forgot', page: () => const Forgot()),
     GetPage(name: '/login/forgot', page: () => const Forgot()),
-    GetPage(name: '/login/passcode', page: () => const Passcode()),
     GetPage(name: '/login/passcode/mainpage', page: () => const Mainpage()),
   ];
 }

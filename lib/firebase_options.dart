@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '792822151078',
     projectId: 'rrfx-cf118',
     storageBucket: 'rrfx-cf118.firebasestorage.app',
+    androidClientId: '792822151078-dmpedoq22map9u7dt1saufeun94fomv2.apps.googleusercontent.com',
+    iosClientId: '792822151078-j0hj3tpt44v6h45052mcs9mhq8slet10.apps.googleusercontent.com',
     iosBundleId: 'com.rrfx.rrfx',
   );
 

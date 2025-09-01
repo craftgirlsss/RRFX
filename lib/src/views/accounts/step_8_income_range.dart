@@ -120,7 +120,7 @@ class _Step8IncomeRange extends State<Step8IncomeRange> {
                             case 2:
                               selectedIncome("Antara 250-500 juta");
                             case 3:
-                              selectedIncome("500 juta");
+                              selectedIncome("Diatas 500 juta");
                             default:
                               selectedIncome("-");
                           }

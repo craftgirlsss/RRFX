@@ -91,6 +91,7 @@ class _Step2StoredData extends State<Step2StoredData> {
 
   @override
   Widget build(BuildContext context) {
+    print(genderController.text);
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [

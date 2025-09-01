@@ -7,11 +7,11 @@ import 'package:rrfx/src/components/colors/default.dart';
 import 'package:rrfx/src/components/containers/icon_container.dart';
 import 'package:rrfx/src/components/languages/language_variable.dart';
 import 'package:rrfx/src/controllers/trading.dart';
-import 'package:rrfx/src/views/accounts/create_real.dart';
 
 class CardInfoAccount extends StatefulWidget {
-  const CardInfoAccount({super.key, required this.isDemo});
+  const CardInfoAccount({super.key, required this.isDemo, this.onTapCreateReal});
   final bool isDemo;
+  final VoidCallback? onTapCreateReal;
 
   @override
   State<CardInfoAccount> createState() => _CardInfoAccountState();
@@ -48,7 +48,9 @@ class _CardInfoAccountState extends State<CardInfoAccount> {
                     }
                   });
                 }else{
-                  Get.to(() => const CreateReal());
+                  if(widget.onTapCreateReal != null){
+                    widget.onTapCreateReal!();
+                  }
                 }
               },
               style: ElevatedButton.styleFrom(

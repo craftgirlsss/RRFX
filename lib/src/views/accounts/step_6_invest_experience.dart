@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinput/pinput.dart';
 import 'package:rrfx/src/components/alerts/default.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/colors/default.dart';
@@ -145,7 +144,7 @@ class _Step6InvestmentExperience extends State<Step6InvestmentExperience> {
             title: regolController.isLoading.value ? "Uploading..." : "Investment Experience",
             onPressed: regolController.isLoading.value ? null : (){
               if(showBrokerName.value){
-                if(companyNameController.text == "" || companyNameController.length == 0){
+                if(companyNameController.text == ""){
                   CustomAlert.alertError(message: "Mohon nama perusahaan diisi");
                 }else{
                   regolController.postStepSix(companyName: companyNameController.text, experience: GlobalVariable.investExperienceIndo[selectedValue.value-1].toLowerCase()).then((result){

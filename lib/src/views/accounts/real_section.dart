@@ -5,6 +5,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:rrfx/src/components/alerts/scaffold_messanger_alert.dart';
 import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
 import 'package:rrfx/src/components/colors/default.dart';
+import 'package:rrfx/src/controllers/home.dart';
 import 'package:rrfx/src/controllers/trading.dart';
 import 'package:rrfx/src/helpers/formatters/number_formatter.dart';
 import 'package:rrfx/src/views/accounts/account_information.dart';
@@ -26,6 +27,7 @@ class RealSection extends StatefulWidget {
 
 class _RealSectionState extends State<RealSection> {
   TradingController tradingController = Get.put(TradingController());
+  HomeController homeController = Get.find();
 
   @override
   void initState() {
@@ -40,6 +42,13 @@ class _RealSectionState extends State<RealSection> {
         }
       }
     }
+    Future.delayed(Duration.zero, (){
+      homeController.getPendingAccount().then((result){
+        if(!result){
+          CustomScaffoldMessanger.showAppSnackBar(context, message: "Failed to get pending account");
+        }
+      });
+    });
   }
 
   @override
@@ -56,7 +65,7 @@ class _RealSectionState extends State<RealSection> {
               height: double.infinity,
               child: Center(child: Text("Getting Real Account...")),
             );
-          }else if(tradingController.tradingAccountModels.value?.response.demo?.length != 0 && tradingController.tradingAccountModels.value?.response.real?.length == 0){
+          }else if(tradingController.tradingAccountModels.value?.response.demo?.isNotEmpty == true && tradingController.tradingAccountModels.value?.response.real?.isEmpty == true){
             return SizedBox(
               width: double.infinity,
               height: double.maxFinite,
@@ -67,7 +76,13 @@ class _RealSectionState extends State<RealSection> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CardInfoAccount(isDemo: false)
+                      CardInfoAccount(isDemo: false, onTapCreateReal: (){
+                        if(homeController.pendingModel.value?.response?[0].status == "Regol belum selesai"){
+                          Get.to(() => const CreateReal());
+                        }else{
+                          CustomScaffoldMessanger.showAppSnackBar(context, message: "Akun masih dalam proses verifikasi");
+                        }
+                      }),
                     ],
                   ),
                 ),
@@ -83,7 +98,11 @@ class _RealSectionState extends State<RealSection> {
                     padding: const EdgeInsets.all(15.0),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        Get.to(() => const CreateReal());
+                        if(homeController.pendingModel.value?.response?[0].status == "Regol belum selesai"){
+                          Get.to(() => const CreateReal());
+                        }else{
+                          CustomScaffoldMessanger.showAppSnackBar(context, message: "Akun masih dalam proses verifikasi");
+                        }
                       },
                       icon: Icon(Icons.add_circle_outlined, color: Colors.white),
                       label: Text("Buat Akun Real Baru"),

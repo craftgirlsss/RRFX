@@ -111,11 +111,7 @@ class _IndexV2State extends State<IndexV2> {
   void _runTradingSignal() {
     utilitiesController.getTradingSignals().then((result) {
       if (!result) {
-        CustomScaffoldMessanger.showAppSnackBar(
-          context,
-          message: utilitiesController.responseMessage.value,
-          type: SnackBarType.warning,
-        );
+        print("Gagal mendapatkan sinyal trading");
       }
       utilitiesController.getNewsList();
     });

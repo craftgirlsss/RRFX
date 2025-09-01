@@ -29,6 +29,7 @@ class _Step11JobHistory extends State<Step11JobHistory> {
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController businessNameController = TextEditingController();
+  TextEditingController namaPekerjaanController = TextEditingController();
   TextEditingController categoryBusinessNameController = TextEditingController();
   TextEditingController yourJobCategoryController = TextEditingController();
   TextEditingController jobPositionController = TextEditingController();
@@ -62,6 +63,7 @@ class _Step11JobHistory extends State<Step11JobHistory> {
     jobPositionController.dispose();
     durationOfWorkController.dispose();
     durationOfLastWorkController.dispose();
+    namaPekerjaanController.dispose();
     officePhoneContact.dispose();
     faxController.dispose();
     currentAddressOffice.dispose();
@@ -77,24 +79,24 @@ class _Step11JobHistory extends State<Step11JobHistory> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar.defaultAppBar(
-            autoImplyLeading: true,
-            title: "Job Information",
-            actions: [
-              CupertinoButton(
-                onPressed: (){
-                  CustomAlert.alertDialogCustomInfo(
-                    title: "Confirmation",
-                    message: "Are you sure you want to cancel? All data will be lost.",
-                    moreThanOneButton: true,
-                    onTap: () {
-                      Get.offAll(() => const Mainpage());
-                    },
-                    textButton: "Yes",
-                  );
-                },
-                child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
-              )
-            ]
+          autoImplyLeading: true,
+          title: "Job Information",
+          actions: [
+            CupertinoButton(
+              onPressed: (){
+                CustomAlert.alertDialogCustomInfo(
+                  title: "Confirmation",
+                  message: "Are you sure you want to cancel? All data will be lost.",
+                  moreThanOneButton: true,
+                  onTap: () {
+                    Get.offAll(() => const Mainpage());
+                  },
+                  textButton: "Yes",
+                );
+              },
+              child: Text(LanguageGlobalVar.CANCEL.tr, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: CustomColor.defaultColor)),
+            )
+          ]
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -118,6 +120,7 @@ class _Step11JobHistory extends State<Step11JobHistory> {
                         );
                       }));
                     }),
+                    if (yourJobCategoryController.text == "Lain-Lain") NameTextField(controller: namaPekerjaanController, fieldName: "Nama Pekerjaan", hintText: "Nama Pekerjaan", labelText: "Nama Pekerjaan"),
                     NameTextField(controller: businessNameController, fieldName: "Nama Perusahaan", hintText: "Nama Perusahaan", labelText: "Nama Perusahaan"),
                     NameTextField(controller: categoryBusinessNameController, fieldName: "Bidang Usaha", hintText: "Input nama bidang usaha", labelText: "Nama Bidang Usaha"),
                     NameTextField(controller: jobPositionController, fieldName: "Job Position", hintText: "Job Position", labelText: "Job Position"),

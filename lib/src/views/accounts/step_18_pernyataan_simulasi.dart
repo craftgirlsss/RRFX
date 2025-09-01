@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rrfx/src/components/alerts/default.dart';
+import 'package:rrfx/src/components/alerts/scaffold_messanger_alert.dart';
 import 'package:rrfx/src/components/appbars/default.dart';
 import 'package:rrfx/src/components/bottomsheets/material_bottom_sheets.dart';
 import 'package:rrfx/src/components/colors/default.dart';
@@ -327,24 +328,28 @@ class _Step18PrenyataanSimulasiState extends State<Step18PrenyataanSimulasi> {
                 title: LanguageGlobalVar.VERIFICATION_IDENTITY.tr,
                 onPressed: regolController.isLoading.value ? null : (){
                   if(_formKey.currentState!.validate()){
-                    regolController.postStepNinePernyataanSimulasi(
-                      urlPhoto: imageLoaded.value ? "" : simulasiAkunDemoURL.value,
-                      appAddress: addressController.text,
-                      appAgree: selectedStatement.value == true ? "ya" : "tidak",
-                      appCity: kabupatenController.text,
-                      appDistrict: kecamatanController.text,
-                      appProvince: provinceController.text,
-                      appRT: rtController.text,
-                      appRW: rwController.text,
-                      appVillage: desaController.text,
-                      appZipcode: zipController.text
-                    ).then((result){
-                      if(!result){
-                        CustomAlert.alertError(message: regolController.responseMessage.value);
-                        return false;
-                      }
-                      Get.to(() => const Step3Marital());
-                    });
+                    if(selectedStatement.value){
+                      regolController.postStepNinePernyataanSimulasi(
+                        urlPhoto: imageLoaded.value ? "" : simulasiAkunDemoURL.value,
+                        appAddress: addressController.text,
+                        appAgree: selectedStatement.value == true ? "ya" : "tidak",
+                        appCity: kabupatenController.text,
+                        appDistrict: kecamatanController.text,
+                        appProvince: provinceController.text,
+                        appRT: rtController.text,
+                        appRW: rwController.text,
+                        appVillage: desaController.text,
+                        appZipcode: zipController.text
+                      ).then((result){
+                        if(!result){
+                          CustomAlert.alertError(message: regolController.responseMessage.value);
+                          return false;
+                        }
+                        Get.to(() => const Step3Marital());
+                      });
+                    }else{
+                      CustomScaffoldMessanger.showAppSnackBar(context, message: "Silakan centang pernyataan \"YA\" simulasi", type: SnackBarType.error);
+                    }
                   }
                 },
                 progressEnd: 4,
